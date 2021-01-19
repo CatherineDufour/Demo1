@@ -145,17 +145,17 @@ objects:
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: DEC-agent
+    name: decagent
 - kind: BuildConfig
   apiVersion: v1
   metadata:
-    name: DEC-agent
+    name: decagent
   spec:
     nodeSelector: null
     output:
       to:
         kind: ImageStreamTag
-        name: 'DEC-agent:latest'
+        name: 'decagent:latest'
     resources: {}
     successfulBuildsHistoryLimit: 5
     failedBuildsHistoryLimit: 5
@@ -218,9 +218,9 @@ objects:
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: DEC-agent
+    name: decagent
     labels:
-      app: DEC-agent
+      app: decagent
   spec:
     strategy:
       type: Rolling
@@ -238,22 +238,22 @@ objects:
         imageChangeParams:
           automatic: true
           containerNames:
-            - DEC-agent
+            - decagent
           from:
             kind: ImageStreamTag
-            name: 'DEC-agent:latest'
+            name: 'decagent:latest'
     replicas: 1
     revisionHistoryLimit: 10
     test: false
     selector:
-      app: DEC-agent
+      app: decagent
     template:
       metadata:
         labels:
-          app: DEC-agent
+          app: decagent
       spec:
         containers:
-          - name: DEC-agent
+          - name: decagent
             image: " "
             ports:
               - containerPort: 3000
@@ -272,10 +272,10 @@ objects:
 - kind: Service
   apiVersion: v1
   metadata:
-    name: DEC-agent
+    name: decagent
   spec:
     selector:
-      app: DEC-agent
+      app: decagent
     ports:
       - name: '3000'
         protocol: TCP
@@ -293,7 +293,7 @@ objects:
     host: dec-agent.apps.exp.lab.pocquebec.org
     to:
       kind: Service
-      name: DEC-agent
+      name: decagent
       weight: 100
     port:
       targetPort: 8000
@@ -315,7 +315,7 @@ objects:
     host: dec-agent-admin.apps.exp.lab.pocquebec.org
     to:
       kind: Service
-      name: DEC-agent
+      name: decagent
       weight: 100
     port:
       targetPort: 3000
