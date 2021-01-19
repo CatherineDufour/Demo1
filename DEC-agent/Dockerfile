@@ -32,7 +32,7 @@ ENTRYPOINT ["/bin/bash", "-c", "aca-py start  --inbound-transport http 0.0.0.0 $
     --wallet-key $WALLET_KEY \
     --wallet-name VaxCertIssuer \
     --wallet-type indy \
-    --label "Directeur de l'État Civil" \
+    --label "Directeur État Civil" \
     --auto-accept-invites \
     --auto-accept-requests \
     --auto-respond-messages \
