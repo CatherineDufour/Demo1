@@ -211,7 +211,7 @@ objects:
     source:
       type: Git
       git:
-        uri: 'git@github.com:CQEN-QDCE/Demo1.git'
+        uri: 'https://github.com/CQEN-QDCE/Demo1.git'
     triggers:
       - type: ConfigChange
     runPolicy: Serial
