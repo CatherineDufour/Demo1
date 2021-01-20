@@ -187,8 +187,11 @@ objects:
         forcePull: true
         dockerfilePath: DEC-agent/Dockerfile
         buildArgs:
+        #Seed: 000000000000DirecteurEtatCivilQc
+        #DID: Ep31SvFAetugFPe5CGzJxt
+        #Verkey: 8XbHSBZu5LpTUmDuvmLtfxUNjKzk4Dpm7u6wX2DuPLMj
         - name: ISSUER_SEED
-          value: 0000000000000000000000000Issuer1
+          value: 000000000000DirecteurEtatCivilQc
         - name: ISSUER_AGENT_ENDPOINT
           value: 'http://dec-agent.apps.exp.lab.pocquebec.org'
         - name: ISSUER_WALLET_KEY
