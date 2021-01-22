@@ -1,0 +1,44 @@
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: dec-controller5
+  annotations:
+    description: Site Web pour émettre l'attestation.
+    tags: cqen, experimentation, sqin, aries, dec, controller
+objects:
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: dec-controller5
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      annotations:
+        app.openshift.io/vcs-ref: master
+        app.openshift.io/vcs-uri: https://github.com/CQEN-QDCE/Demo1.git
+        template.alpha.openshift.io/wait-for-ready: "true"
+      labels:
+        app: dec-controller5
+      name: dec-controller5
+    spec:
+      output:
+        to:
+          kind: ImageStreamTag
+          name: dec-controller5:latest
+      source:
+        contextDir: DEC-controller
+        git:
+          ref: master
+          uri: https://github.com/CQEN-QDCE/Demo1.git
+        type: Git
+      strategy:
+        type: Source
+        sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: "s2i-nodejs-nginx:latest"
+        env:
+          name: BUILD_OUTPUT_DIR
+          value: build
+      triggers:
+        - type: ConfigChange
