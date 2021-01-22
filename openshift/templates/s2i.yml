@@ -1,44 +1,52 @@
-kind: Build
-apiVersion: build.openshift.io/v1
+kind: Template
+apiVersion: template.openshift.io/v1
 metadata:
+  name: dec-controller
   annotations:
-    openshift.io/build-config.name: dec-controller4
-    quay-registry-operator.redhatcop.redhat.io/destination-imagestream: "dec-flihp/dec-controller4:latest"
-    quay-registry-operator.redhatcop.redhat.io/destination-imagestreamtag-imported: "true"
-    quay-registry-operator.redhatcop.redhat.io/quay-registry-operator-managed: "true"
-  namespace: dec-flihp
-  labels:
-    app: dec-controller4
-    app.kubernetes.io/component: dec-controller4
-    app.kubernetes.io/instance: dec-controller4
-    buildconfig: dec-controller4
-    openshift.io/build-config.name: dec-controller4
-    openshift.io/build.start-policy: Serial
-spec:
-  nodeSelector: null
-  resources: {}
-  triggeredBy:
-    - message: Image change
-      imageChangeBuild:
-        imageID: >-
-          quay.io/evanshortiss/s2i-nodejs-nginx@sha256:6206d204ad338a4cff9ccdbb2ebd7ad7fbd5cdeaa955f0b51d01f0ec32903989
-        fromRef:
-          kind: ImageStreamTag
-          name: "s2i-nodejs-nginx:latest"
-  strategy:
-    type: Source
-    sourceStrategy:
-      from:
-        kind: DockerImage
-        name: >-
-          quay.io/evanshortiss/s2i-nodejs-nginx@sha256:6206d204ad338a4cff9ccdbb2ebd7ad7fbd5cdeaa955f0b51d01f0ec32903989
-      env:
-        - name: BUILD_OUTPUT_DIR
-          value: build
-  postCommit: {}
-  serviceAccount: builder
-  source:
-    type: Git
-    git:
-      uri: "https://github.com/CQEN-QDCE/Demo1.git"
-    contextDir: DEC-controller
+    description: Site Web pour émettre l'attestation.
+    tags: cqen, experimentation, sqin, aries, dec, controller
+objects:
+  - kind: BuildConfig
+    apiVersion: build.openshift.io/v1
+    metadata:
+    namespace: dec-flihp
+    labels:
+        app: dec-controller4
+    name: dec-controller4
+    spec:
+    nodeSelector: null
+    output:
+        to:
+        kind: ImageStreamTag
+        name: 'dec-controller4:latest'
+    resources: {}
+    successfulBuildsHistoryLimit: 5
+    failedBuildsHistoryLimit: 5
+    strategy:
+        type: Source
+        sourceStrategy:
+        from:
+            kind: ImageStreamTag
+            name: 's2i-nodejs-nginx:latest'
+        env:
+            - name: BUILD_OUTPUT_DIR
+            value: build
+    postCommit: {}
+    source:
+        type: Git
+        git:
+        uri: 'https://github.com/CQEN-QDCE/Demo1.git'
+        contextDir: DEC-controller
+    triggers:
+        - type: GitHub
+        github:
+            secret: YeQUIQ7i5hEUlz0xb0pt
+        - type: Generic
+        generic:
+            secret: cuOXm7nhwknlgcQhVCmm
+        - type: ConfigChange
+        - type: ImageChange
+        imageChange:
+            lastTriggeredImageID: >-
+            quay.io/evanshortiss/s2i-nodejs-nginx@sha256:6206d204ad338a4cff9ccdbb2ebd7ad7fbd5cdeaa955f0b51d01f0ec32903989
+    runPolicy: Serial
