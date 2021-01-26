@@ -33,7 +33,7 @@ objects:
         type: Git
       strategy:
         dockerStrategy:
-          dockerfilePath: Dockerfile
+          dockerfilePath: DEC-controller/Dockerfile
         type: Docker
       triggers:
         - type: ConfigChange
