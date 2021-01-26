@@ -15,7 +15,21 @@ Dans server.js , l'attribut HOST_URL
 
 S'assurer d'avoir le bon schéma et le bon cred_def
 
-#Install
+#Démarrer l'installation du Site Web de l'émetteur
+oc new-app quay.io/evanshortiss/s2i-nodejs-nginx~https://github.com/CQEN-QDCE/Demo1.git \
+--name dec-controller \
+--build-env BUILD_OUTPUT_DIR=build \
+--context-dir DEC-controller
+
+oc expose svc/dec-controller
+
+echo "http://$(oc get route/dec-controller -o jsonpath='{.spec.host}')"
+
+oc create route edge --service=dec-controller --hostname=http://dec-controller.apps.exp.lab.pocquebec.org
+oc expose svc/dec-controller --hostname=dec-controller.apps.exp.lab.pocquebec.org
+oc create route edge --service=dec-controller --hostname=dec-controller.apps.exp.lab.pocquebec.org
+
+#OLD
 oc new-build --image-stream nodejs --strategy source --binary=true --name=dec-controller
 
 tar -zcvf deploy.tar.gz --exclude 'node_modules' --exclude 'build' --exclude 'deploy.tar.gz' .

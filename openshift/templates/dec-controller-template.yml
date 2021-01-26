@@ -1,38 +1,36 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: vc-authn-issuer
+  name: dec-controller
   annotations:
-    description: Émetteur d'attestation d'authentification.
-    tags: cqen, experimentation, sqin, aries
+    description: Site Web pour émettre l'attestation.
+    tags: cqen, experimentation, sqin, aries, dec, controller
 objects:
   - kind: ImageStream
     apiVersion: v1
     metadata:
-      name: vc-authn-issuer
+      name: dec-controller
   - kind: BuildConfig
     apiVersion: v1
     metadata:
       annotations:
         app.openshift.io/vcs-ref: master
-        app.openshift.io/vcs-uri: git@github.com:CQEN-QDCE/vc-authn-issuer.git
+        app.openshift.io/vcs-uri: https://github.com/CQEN-QDCE/Demo1.git
         template.alpha.openshift.io/wait-for-ready: "true"
       labels:
-        app: vc-authn-issuer
-      name: vc-authn-issuer
+        app: dec-controller
+      name: dec-controller
     spec:
       output:
         to:
           kind: ImageStreamTag
-          name: vc-authn-issuer:latest
+          name: dec-controller:latest
       source:
-        contextDir: /
+        contextDir: DEC-controller
         git:
           ref: master
-          uri: git@github.com:CQEN-QDCE/vc-authn-issuer.git
+          uri: https://github.com/CQEN-QDCE/Demo1.git
         type: Git
-        sourceSecret:
-          name: vc-authn-issuer
       strategy:
         dockerStrategy:
           dockerfilePath: Dockerfile
