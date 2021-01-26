@@ -28,7 +28,6 @@ objects:
       source:
         contextDir: DEC-controller
         git:
-          ref: master
           uri: https://github.com/CQEN-QDCE/Demo1.git
         type: Git
       strategy:
