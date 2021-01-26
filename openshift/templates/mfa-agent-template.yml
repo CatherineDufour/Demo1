@@ -1,16 +1,16 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: dec-cloud-agents
+  name: mfa-cloud-agents
   annotations:
     description: Agents cloud ARIES pour les expérimentations du projet SQIN.
-    tags: cqen, experimentation, sqin, aries, dec, directeur de l'état civil, émetteur
+    tags: cqen, experimentation, sqin, aries, mfa, minitère de la famille, service de garde, consommateur
 objects:
 #PostgreSQL
 - kind: Secret
   apiVersion: v1
   metadata:
-    name: postgresql
+    name: mfa-wallet-postgresql
     annotations:
       template.openshift.io/expose-username: "{.data['database-user']}"
       template.openshift.io/expose-password: "{.data['database-password']}"
@@ -26,16 +26,16 @@ objects:
 - kind: Service
   apiVersion: v1
   metadata:
-    name: postgresql
+    name: mfa-wallet-postgresql
   spec:
     ports:
-    - name: postgresql
+    - name: mfa-wallet-postgresql
       protocol: TCP
       port: 5432
       targetPort: 5432
       nodePort: 0
     selector:
-      name: postgresql
+      name: mfa-wallet-postgresql
     type: ClusterIP
     sessionAffinity: None
   status:
@@ -43,7 +43,7 @@ objects:
 - kind: PersistentVolumeClaim
   apiVersion: v1
   metadata:
-    name: postgresql
+    name: mfa-wallet-postgresql
   spec:
     accessModes:
     - ReadWriteOnce
@@ -53,7 +53,7 @@ objects:
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: postgresql
+    name: mfa-wallet-postgresql
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
     labels:
@@ -75,14 +75,14 @@ objects:
     - type: ConfigChange
     replicas: 1
     selector:
-      name: postgresql
+      name: mfa-wallet-postgresql
     template:
       metadata:
         labels:
-          name: postgresql
+          name: mfa-wallet-postgresql
       spec:
         containers:
-        - name: postgresql
+        - name: mfa-wallet-postgresql
           image: " "
           ports:
           - containerPort: 5432
@@ -104,28 +104,28 @@ objects:
           - name: POSTGRESQL_USER
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: mfa-wallet-postgresql
                 key: database-user
           - name: POSTGRESQL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: mfa-wallet-postgresql
                 key: database-password
           - name: POSTGRESQL_DATABASE
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: mfa-wallet-postgresql
                 key: database-name
           - name: POSTGRESQL_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: mfa-wallet-postgresql
                 key: database-admin-password                
           resources:
             limits:
               memory: 512Mi
           volumeMounts:
-          - name: postgresql-data
+          - name: mfa-wallet-postgresql-data
             mountPath: "/var/lib/pgsql/data"
           terminationMessagePath: "/dev/termination-log"
           imagePullPolicy: IfNotPresent
@@ -134,14 +134,14 @@ objects:
             capabilities: {}
             privileged: false
         volumes:
-        - name: postgresql-data
+        - name: mfa-wallet-postgresql-data
           persistentVolumeClaim:
-            claimName: postgresql
+            claimName: mfa-wallet-postgresql
         restartPolicy: Always
         dnsPolicy: ClusterFirst
   status: {}
 
-#DEC-agent
+#MFA-agent
 - kind: ImageStream
   apiVersion: v1
   metadata:
@@ -149,13 +149,13 @@ objects:
 - kind: BuildConfig
   apiVersion: v1
   metadata:
-    name: dec-agent
+    name: mfa-agent
   spec:
     nodeSelector: null
     output:
       to:
         kind: ImageStreamTag
-        name: 'dec-agent:latest'
+        name: 'mfa-agent:latest'
     resources: {}
     successfulBuildsHistoryLimit: 5
     failedBuildsHistoryLimit: 5
@@ -185,7 +185,7 @@ objects:
                 name: postgresql
                 key: database-admin-password
         forcePull: true
-        dockerfilePath: DEC-agent/Dockerfile
+        dockerfilePath: MFA-agent/Dockerfile
         buildArgs:
         #Seed: 000000000000DirecteurEtatCivilQc
         #DID: Ep31SvFAetugFPe5CGzJxt
@@ -221,9 +221,9 @@ objects:
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: dec-agent
+    name: mfa-agent
     labels:
-      app: dec-agent
+      app: mfa-agent
   spec:
     strategy:
       type: Rolling
@@ -241,22 +241,22 @@ objects:
         imageChangeParams:
           automatic: true
           containerNames:
-            - dec-agent
+            - mfa-agent
           from:
             kind: ImageStreamTag
-            name: 'dec-agent:latest'
+            name: 'mfa-agent:latest'
     replicas: 1
     revisionHistoryLimit: 10
     test: false
     selector:
-      app: dec-agent
+      app: mfa-agent
     template:
       metadata:
         labels:
-          app: dec-agent
+          app: mfa-agent
       spec:
         containers:
-          - name: dec-agent
+          - name: mfa-agent
             image: " "
             ports:
               - containerPort: 3000
@@ -275,10 +275,10 @@ objects:
 - kind: Service
   apiVersion: v1
   metadata:
-    name: dec-agent
+    name: mfa-agent
   spec:
     selector:
-      app: dec-agent
+      app: mfa-agent
     ports:
       - name: '3000'
         protocol: TCP
@@ -291,19 +291,19 @@ objects:
 - kind: Route
   apiVersion: v1
   metadata:
-    name: dec-agent
+    name: mfa-agent
   spec:
-    host: dec-agent.apps.exp.lab.pocquebec.org
+    host: mfa-agent.apps.exp.lab.pocquebec.org
     to:
       kind: Service
-      name: dec-agent
+      name: mfa-agent
       weight: 100
     port:
       targetPort: 8000
     wildcardPolicy: None
   status:
     ingress:
-      - host: dec-agent.apps.exp.lab.pocquebec.org
+      - host: mfa-agent.apps.exp.lab.pocquebec.org
         routerName: default
         conditions:
           - type: Admitted
@@ -313,19 +313,19 @@ objects:
 - kind: Route
   apiVersion: v1
   metadata:
-    name: dec-agent-admin
+    name: mfa-agent-admin
   spec:
-    host: dec-agent-admin.apps.exp.lab.pocquebec.org
+    host: mfa-agent-admin.apps.exp.lab.pocquebec.org
     to:
       kind: Service
-      name: dec-agent
+      name: mfa-agent
       weight: 100
     port:
       targetPort: 3000
     wildcardPolicy: None
   status:
     ingress:
-      - host: dec-agent-admin.apps.exp.lab.pocquebec.org
+      - host: mfa-agent-admin.apps.exp.lab.pocquebec.org
         routerName: default
         conditions:
           - type: Admitted

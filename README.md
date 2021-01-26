@@ -1,5 +1,7 @@
 # Demo1
 
+Se créer un DID public sur la blockchain.
+
 S'assurer d'avoir le bon nom dans le dockerfile de l'agent qui va accompagner l'attestation pour que l'affiche fonctionne dans le portefeuille : --label "Directeur de l'État Civil" \
 
 #Créer le projet
