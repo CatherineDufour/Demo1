@@ -149,6 +149,8 @@ objects:
 - kind: BuildConfig
   apiVersion: v1
   metadata:
+    labels:
+      app: dec-agent
     name: dec-agent
   spec:
     nodeSelector: null
