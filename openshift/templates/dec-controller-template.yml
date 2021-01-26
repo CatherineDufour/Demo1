@@ -14,7 +14,6 @@ objects:
     apiVersion: v1
     metadata:
       annotations:
-        app.openshift.io/vcs-ref: master
         app.openshift.io/vcs-uri: https://github.com/CQEN-QDCE/Demo1.git
         template.alpha.openshift.io/wait-for-ready: "true"
       labels:
@@ -32,7 +31,7 @@ objects:
         type: Git
       strategy:
         dockerStrategy:
-          dockerfilePath: DEC-controller/Dockerfile
+          dockerfilePath: Dockerfile
         type: Docker
       triggers:
         - type: ConfigChange
