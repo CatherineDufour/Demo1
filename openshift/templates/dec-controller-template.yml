@@ -40,9 +40,9 @@ objects:
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
-      name: vc-authn-issuer
+      name: dec-controller
       labels:
-        app: vc-authn-issuer
+        app: dec-controller
     spec:
       strategy:
         type: Rolling
@@ -60,22 +60,22 @@ objects:
           imageChangeParams:
             automatic: true
             containerNames:
-              - vc-authn-issuer
+              - dec-controller
             from:
               kind: ImageStreamTag
-              name: "vc-authn-issuer:latest"
+              name: "dec-controller:latest"
       replicas: 1
       revisionHistoryLimit: 10
       test: false
       selector:
-        app: vc-authn-issuer
+        app: dec-controller
       template:
         metadata:
           labels:
-            app: vc-authn-issuer
+            app: dec-controller
         spec:
           containers:
-            - name: vc-authn-issuer
+            - name: dec-controller
               image: " "
               ports:
                 - containerPort: 10000
@@ -92,10 +92,10 @@ objects:
   - kind: Service
     apiVersion: v1
     metadata:
-      name: vc-authn-issuer
+      name: dec-controller
     spec:
       selector:
-        app: vc-authn-issuer
+        app: dec-controller
       ports:
         - name: "10000"
           protocol: TCP
@@ -104,19 +104,19 @@ objects:
   - kind: Route
     apiVersion: v1
     metadata:
-      name: vc-authn-issuer
+      name: dec-controller
     spec:
-      host: vc-authn-issuer.apps.exp.lab.pocquebec.org
+      host: dec-controller.apps.exp.lab.pocquebec.org
       to:
         kind: Service
-        name: vc-authn-issuer
+        name: dec-controller
         weight: 100
       port:
         targetPort: 10000
       wildcardPolicy: None
     status:
       ingress:
-        - host: vc-authn-issuer.apps.exp.lab.pocquebec.org
+        - host: dec-controller.apps.exp.lab.pocquebec.org
           routerName: default
           conditions:
             - type: Admitted
