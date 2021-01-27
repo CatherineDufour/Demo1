@@ -194,6 +194,7 @@ objects:
         #Seed: 000000000000DirecteurEtatCivilQc
         #DID: Ep31SvFAetugFPe5CGzJxt
         #Verkey: 8XbHSBZu5LpTUmDuvmLtfxUNjKzk4Dpm7u6wX2DuPLMj
+        #Alias: DEC
         - name: ISSUER_SEED
           value: 000000000000DirecteurEtatCivilQc
         - name: ISSUER_AGENT_ENDPOINT
