@@ -76,7 +76,7 @@ objects:
     - type: ConfigChange
     replicas: 1
     selector:
-      name: postgresql
+      name: dec-wallet-postgresql
     template:
       metadata:
         labels:
@@ -210,7 +210,7 @@ objects:
         - name: API_PORT
           value: '3000'
         - name: ISSUER_POSTGRESQL_WALLET_HOST
-          value: postgresql
+          value: dec-wallet-postgresql
         - name: ISSUER_POSTGRESQL_WALLET_PORT
           value: '5432'
     postCommit: {}
