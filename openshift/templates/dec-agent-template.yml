@@ -1,16 +1,16 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: dec-cloud-agents
+  name: dec-demo1
   annotations:
     description: Agents cloud ARIES pour les expérimentations du projet SQIN.
     tags: cqen, experimentation, sqin, aries, dec, directeur de l'état civil, émetteur
 objects:
-#PostgreSQL
+#DEC-wallet (PostgreSQL)
 - kind: Secret
   apiVersion: v1
   metadata:
-    name: dec-wallet-postgresql
+    name: dec-wallet
     annotations:
       template.openshift.io/expose-username: "{.data['database-user']}"
       template.openshift.io/expose-password: "{.data['database-password']}"
@@ -26,16 +26,16 @@ objects:
 - kind: Service
   apiVersion: v1
   metadata:
-    name: dec-wallet-postgresql
+    name: dec-wallet
   spec:
     ports:
-    - name: postgresql
+    - name: dec-wallet
       protocol: TCP
       port: 5432
       targetPort: 5432
       nodePort: 0
     selector:
-      name: postgresql
+      name: dec-wallet
     type: ClusterIP
     sessionAffinity: None
   status:
@@ -43,7 +43,7 @@ objects:
 - kind: PersistentVolumeClaim
   apiVersion: v1
   metadata:
-    name: dec-wallet-postgresql
+    name: dec-wallet
   spec:
     accessModes:
     - ReadWriteOnce
@@ -53,7 +53,7 @@ objects:
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: dec-wallet-postgresql
+    name: dec-wallet
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
     labels:
@@ -67,7 +67,7 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - postgresql
+        - dec-wallet
         from:
           kind: ImageStreamTag
           name: postgresql:10
@@ -76,14 +76,14 @@ objects:
     - type: ConfigChange
     replicas: 1
     selector:
-      name: dec-wallet-postgresql
+      name: dec-wallet
     template:
       metadata:
         labels:
-          name: dec-wallet-postgresql
+          name: dec-wallet
       spec:
         containers:
-        - name: postgresql
+        - name: dec-wallet
           image: " "
           ports:
           - containerPort: 5432
@@ -105,28 +105,28 @@ objects:
           - name: POSTGRESQL_USER
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: dec-wallet
                 key: database-user
           - name: POSTGRESQL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: dec-wallet
                 key: database-password
           - name: POSTGRESQL_DATABASE
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: dec-wallet
                 key: database-name
           - name: POSTGRESQL_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: dec-wallet
                 key: database-admin-password                
           resources:
             limits:
               memory: 512Mi
           volumeMounts:
-          - name: postgresql-data
+          - name: dec-wallet-data
             mountPath: "/var/lib/pgsql/data"
           terminationMessagePath: "/dev/termination-log"
           imagePullPolicy: IfNotPresent
@@ -135,9 +135,9 @@ objects:
             capabilities: {}
             privileged: false
         volumes:
-        - name: postgresql-data
+        - name: dec-wallet-data
           persistentVolumeClaim:
-            claimName: postgresql
+            claimName: dec-wallet
         restartPolicy: Always
         dnsPolicy: ClusterFirst
   status: {}
@@ -170,25 +170,25 @@ objects:
           - name: POSTGRESQL_WALLET_USER
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: dec-wallet
                 key: database-user
           - name: POSTGRESQL_WALLET_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: dec-wallet
                 key: database-password
           - name: POSTGRESQL_WALLET_ADMIN_USER
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: dec-wallet
                 key: database-admin-user
           - name: POSTGRESQL_WALLET_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: dec-wallet
                 key: database-admin-password
         forcePull: true
-        dockerfilePath: DEC-agent/Dockerfile
+        dockerfilePath: Dockerfile
         buildArgs:
         #Seed: 000000000000DirecteurEtatCivilQc
         #DID: Ep31SvFAetugFPe5CGzJxt
@@ -210,11 +210,12 @@ objects:
         - name: API_PORT
           value: '3000'
         - name: ISSUER_POSTGRESQL_WALLET_HOST
-          value: dec-wallet-postgresql
+          value: dec-wallet
         - name: ISSUER_POSTGRESQL_WALLET_PORT
           value: '5432'
     postCommit: {}
     source:
+      contextDir: DEC-agent
       type: Git
       git:
         uri: 'https://github.com/CQEN-QDCE/Demo1.git'
@@ -334,5 +335,123 @@ objects:
         conditions:
           - type: Admitted
             status: 'True'
+        wildcardPolicy: None
+        routerCanonicalHostname: apps.exp.lab.pocquebec.org
+
+#DEC-controller
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: dec-controller
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    annotations:
+      app.openshift.io/vcs-uri: https://github.com/CQEN-QDCE/Demo1.git
+      template.alpha.openshift.io/wait-for-ready: "true"
+    labels:
+      app: dec-controller
+    name: dec-controller
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: dec-controller:latest
+    source:
+      contextDir: DEC-controller
+      git:
+        uri: https://github.com/CQEN-QDCE/Demo1.git
+      type: Git
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+      type: Docker
+    triggers:
+      - type: ConfigChange
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: dec-controller
+    labels:
+      app: dec-controller
+      app.kubernetes.io/part-of: DEC
+  spec:
+    strategy:
+      type: Rolling
+      rollingParams:
+        updatePeriodSeconds: 1
+        intervalSeconds: 1
+        timeoutSeconds: 600
+        maxUnavailable: 25%
+        maxSurge: 25%
+      resources: {}
+      activeDeadlineSeconds: 21600
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - dec-controller
+          from:
+            kind: ImageStreamTag
+            name: "dec-controller:latest"
+    replicas: 1
+    revisionHistoryLimit: 10
+    test: false
+    selector:
+      app: dec-controller
+    template:
+      metadata:
+        labels:
+          app: dec-controller
+      spec:
+        containers:
+          - name: dec-controller
+            image: " "
+            ports:
+              - containerPort: 10000
+                protocol: TCP
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            imagePullPolicy: Always
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirst
+        securityContext: {}
+        schedulerName: default-scheduler
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: dec-controller
+  spec:
+    selector:
+      app: dec-controller
+    ports:
+      - name: "10000"
+        protocol: TCP
+        port: 10000
+        targetPort: 10000
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: dec-controller
+  spec:
+    host: dec-controller.apps.exp.lab.pocquebec.org
+    to:
+      kind: Service
+      name: dec-controller
+      weight: 100
+    port:
+      targetPort: 10000
+    wildcardPolicy: None
+  status:
+    ingress:
+      - host: dec-controller.apps.exp.lab.pocquebec.org
+        routerName: default
+        conditions:
+          - type: Admitted
+            status: "True"
         wildcardPolicy: None
         routerCanonicalHostname: apps.exp.lab.pocquebec.org
