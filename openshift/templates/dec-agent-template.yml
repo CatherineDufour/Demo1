@@ -10,7 +10,7 @@ objects:
 - kind: Secret
   apiVersion: v1
   metadata:
-    name: postgresql
+    name: dec-wallet-postgresql
     annotations:
       template.openshift.io/expose-username: "{.data['database-user']}"
       template.openshift.io/expose-password: "{.data['database-password']}"
@@ -26,7 +26,7 @@ objects:
 - kind: Service
   apiVersion: v1
   metadata:
-    name: postgresql
+    name: dec-wallet-postgresql
   spec:
     ports:
     - name: postgresql
@@ -43,7 +43,7 @@ objects:
 - kind: PersistentVolumeClaim
   apiVersion: v1
   metadata:
-    name: postgresql
+    name: dec-wallet-postgresql
   spec:
     accessModes:
     - ReadWriteOnce
@@ -53,11 +53,11 @@ objects:
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: postgresql
+    name: dec-wallet-postgresql
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
     labels:
-      app: dec-agent
+      app: dec-wallet
       app.kubernetes.io/part-of: DEC
   spec:
     strategy:
@@ -80,7 +80,7 @@ objects:
     template:
       metadata:
         labels:
-          name: postgresql
+          name: dec-wallet-postgresql
       spec:
         containers:
         - name: postgresql
