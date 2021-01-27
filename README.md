@@ -15,8 +15,8 @@ Dans .env , l'attribut REACT_APP_ISSUER_HOST_URL + S'assurer d'avoir le bon sch�
 Dans server.js , l'attribut HOST_URL
 
 #Créer le projet openshift
-oc new-project dec-flihp --display-name="DEC flihp" --description="flihp - Directeur de l'État Civil"
-oc project dec-flihp
+oc new-project exp-att-del --display-name="Expérimentation Attestation Déléguée" --description="Expérimentation sur l'Attestation Déléguée en verifiable credential"
+oc project exp-att-del
 
 #Démarrer l'installation de l'application du Directeur de l'État Civil du Québec
 oc process -f dec-template.yml | oc apply -f -

@@ -1,7 +1,7 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: mfa-demo1
+  name: mfa-demo-exp-att-del
   annotations:
     description: Site Web qui consomme l'attestation pour les expérimentations d'une attestation délégué.
     tags: cqen, experimentation, sqin, aries, mfa, ministère de la famille, service de garde, émetteur, attestation, délégué
