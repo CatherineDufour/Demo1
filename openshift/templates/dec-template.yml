@@ -3,8 +3,8 @@ apiVersion: template.openshift.io/v1
 metadata:
   name: dec-demo1
   annotations:
-    description: Agents cloud ARIES pour les expérimentations du projet SQIN.
-    tags: cqen, experimentation, sqin, aries, dec, directeur de l'état civil, émetteur
+    description: Site Web qui émet l'attestation pour les expérimentations d'une attestation délégué.
+    tags: cqen, experimentation, sqin, aries, dec, directeur de l'état civil, émetteur, attestation, délégué
 objects:
 #DEC-wallet (PostgreSQL)
 - kind: Secret
