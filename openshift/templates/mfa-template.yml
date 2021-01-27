@@ -1,16 +1,16 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: mfa-cloud-agents
+  name: mfa-demo1
   annotations:
-    description: Agents cloud ARIES pour les expérimentations du projet SQIN.
-    tags: cqen, experimentation, sqin, aries, mfa, minitère de la famille, service de garde, consommateur
+    description: Site Web qui consomme l'attestation pour les expérimentations d'une attestation délégué.
+    tags: cqen, experimentation, sqin, aries, mfa, ministère de la famille, service de garde, émetteur, attestation, délégué
 objects:
-#PostgreSQL
+#MFA-wallet (PostgreSQL)
 - kind: Secret
   apiVersion: v1
   metadata:
-    name: mfa-wallet-postgresql
+    name: mfa-wallet
     annotations:
       template.openshift.io/expose-username: "{.data['database-user']}"
       template.openshift.io/expose-password: "{.data['database-password']}"
@@ -26,16 +26,16 @@ objects:
 - kind: Service
   apiVersion: v1
   metadata:
-    name: mfa-wallet-postgresql
+    name: mfa-wallet
   spec:
     ports:
-    - name: mfa-wallet-postgresql
+    - name: mfa-wallet
       protocol: TCP
       port: 5432
       targetPort: 5432
       nodePort: 0
     selector:
-      name: mfa-wallet-postgresql
+      name: mfa-wallet
     type: ClusterIP
     sessionAffinity: None
   status:
@@ -43,7 +43,7 @@ objects:
 - kind: PersistentVolumeClaim
   apiVersion: v1
   metadata:
-    name: mfa-wallet-postgresql
+    name: mfa-wallet
   spec:
     accessModes:
     - ReadWriteOnce
@@ -53,11 +53,12 @@ objects:
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: mfa-wallet-postgresql
+    name: mfa-wallet
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
     labels:
-      app.kubernetes.io/part-of: marketplace
+      app: mfa-wallet
+      app.kubernetes.io/part-of: MFA
   spec:
     strategy:
       type: Recreate
@@ -66,7 +67,7 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - postgresql
+        - mfa-wallet
         from:
           kind: ImageStreamTag
           name: postgresql:10
@@ -75,14 +76,14 @@ objects:
     - type: ConfigChange
     replicas: 1
     selector:
-      name: mfa-wallet-postgresql
+      name: mfa-wallet
     template:
       metadata:
         labels:
-          name: mfa-wallet-postgresql
+          name: mfa-wallet
       spec:
         containers:
-        - name: mfa-wallet-postgresql
+        - name: mfa-wallet
           image: " "
           ports:
           - containerPort: 5432
@@ -104,28 +105,28 @@ objects:
           - name: POSTGRESQL_USER
             valueFrom:
               secretKeyRef:
-                name: mfa-wallet-postgresql
+                name: mfa-wallet
                 key: database-user
           - name: POSTGRESQL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: mfa-wallet-postgresql
+                name: mfa-wallet
                 key: database-password
           - name: POSTGRESQL_DATABASE
             valueFrom:
               secretKeyRef:
-                name: mfa-wallet-postgresql
+                name: mfa-wallet
                 key: database-name
           - name: POSTGRESQL_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: mfa-wallet-postgresql
+                name: mfa-wallet
                 key: database-admin-password                
           resources:
             limits:
               memory: 512Mi
           volumeMounts:
-          - name: mfa-wallet-postgresql-data
+          - name: mfa-wallet-data
             mountPath: "/var/lib/pgsql/data"
           terminationMessagePath: "/dev/termination-log"
           imagePullPolicy: IfNotPresent
@@ -134,9 +135,9 @@ objects:
             capabilities: {}
             privileged: false
         volumes:
-        - name: mfa-wallet-postgresql-data
+        - name: mfa-wallet-data
           persistentVolumeClaim:
-            claimName: mfa-wallet-postgresql
+            claimName: mfa-wallet
         restartPolicy: Always
         dnsPolicy: ClusterFirst
   status: {}
@@ -145,10 +146,12 @@ objects:
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: dec-agent
+    name: mfa-agent
 - kind: BuildConfig
   apiVersion: v1
   metadata:
+    labels:
+      app: mfa-agent
     name: mfa-agent
   spec:
     nodeSelector: null
@@ -167,39 +170,41 @@ objects:
           - name: POSTGRESQL_WALLET_USER
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: mfa-wallet
                 key: database-user
           - name: POSTGRESQL_WALLET_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: mfa-wallet
                 key: database-password
           - name: POSTGRESQL_WALLET_ADMIN_USER
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: mfa-wallet
                 key: database-admin-user
           - name: POSTGRESQL_WALLET_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgresql
+                name: mfa-wallet
                 key: database-admin-password
         forcePull: true
-        dockerfilePath: MFA-agent/Dockerfile
+        dockerfilePath: Dockerfile
         buildArgs:
-        #Seed: 000000000000DirecteurEtatCivilQc
-        #DID: Ep31SvFAetugFPe5CGzJxt
-        #Verkey: 8XbHSBZu5LpTUmDuvmLtfxUNjKzk4Dpm7u6wX2DuPLMj
+        #This is an example that we used on our demo vonx blockchain
+        #Seed: 00000000000000MinistereFamilleQc
+        #DID: 4nLQGUccVznQNW2Newa6Mn
+        #Verkey: 34Yba1rxakA16QhYxKJyo6GepYa9Ra1yec7L5DsQHkSn
+        #Alias: MFA
         - name: ISSUER_SEED
-          value: 000000000000DirecteurEtatCivilQc
+          value: 00000000000000MinistereFamilleQc
         - name: ISSUER_AGENT_ENDPOINT
-          value: 'http://dec-agent.apps.exp.lab.pocquebec.org'
+          value: 'http://mfa-agent.apps.exp.lab.pocquebec.org'
         - name: ISSUER_WALLET_KEY
           value: Issuer1Wallet
         - name: ISSUER_ADMIN_API_KEY
           value: secret
         - name: ISSUER_HOSTNAME
-          value: 'http://dec-agent.apps.exp.lab.pocquebec.org'
+          value: 'http://mfa-agent.apps.exp.lab.pocquebec.org'
         - name: GENESIS_URL
           value: 'http://vonx.pocquebec.org:9000/genesis'
         - name: INBOUND_PORT
@@ -207,11 +212,12 @@ objects:
         - name: API_PORT
           value: '3000'
         - name: ISSUER_POSTGRESQL_WALLET_HOST
-          value: postgresql
+          value: mfa-wallet
         - name: ISSUER_POSTGRESQL_WALLET_PORT
           value: '5432'
     postCommit: {}
     source:
+      contextDir: MFA-agent
       type: Git
       git:
         uri: 'https://github.com/CQEN-QDCE/Demo1.git'
@@ -224,6 +230,7 @@ objects:
     name: mfa-agent
     labels:
       app: mfa-agent
+      app.kubernetes.io/part-of: MFA
   spec:
     strategy:
       type: Rolling
@@ -330,5 +337,123 @@ objects:
         conditions:
           - type: Admitted
             status: 'True'
+        wildcardPolicy: None
+        routerCanonicalHostname: apps.exp.lab.pocquebec.org
+
+#MFA-controller
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: mfa-controller
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    annotations:
+      app.openshift.io/vcs-uri: https://github.com/CQEN-QDCE/Demo1.git
+      template.alpha.openshift.io/wait-for-ready: "true"
+    labels:
+      app: mfa-controller
+    name: mfa-controller
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: mfa-controller:latest
+    source:
+      contextDir: MFA-controller
+      git:
+        uri: https://github.com/CQEN-QDCE/Demo1.git
+      type: Git
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+      type: Docker
+    triggers:
+      - type: ConfigChange
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: mfa-controller
+    labels:
+      app: mfa-controller
+      app.kubernetes.io/part-of: MFA
+  spec:
+    strategy:
+      type: Rolling
+      rollingParams:
+        updatePeriodSeconds: 1
+        intervalSeconds: 1
+        timeoutSeconds: 600
+        maxUnavailable: 25%
+        maxSurge: 25%
+      resources: {}
+      activeDeadlineSeconds: 21600
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - mfa-controller
+          from:
+            kind: ImageStreamTag
+            name: "mfa-controller:latest"
+    replicas: 1
+    revisionHistoryLimit: 10
+    test: false
+    selector:
+      app: mfa-controller
+    template:
+      metadata:
+        labels:
+          app: mfa-controller
+      spec:
+        containers:
+          - name: mfa-controller
+            image: " "
+            ports:
+              - containerPort: 10000
+                protocol: TCP
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            imagePullPolicy: Always
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirst
+        securityContext: {}
+        schedulerName: default-scheduler
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: mfa-controller
+  spec:
+    selector:
+      app: mfa-controller
+    ports:
+      - name: "10000"
+        protocol: TCP
+        port: 10000
+        targetPort: 10000
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: mfa-controller
+  spec:
+    host: mfa-controller.apps.exp.lab.pocquebec.org
+    to:
+      kind: Service
+      name: mfa-controller
+      weight: 100
+    port:
+      targetPort: 10000
+    wildcardPolicy: None
+  status:
+    ingress:
+      - host: mfa-controller.apps.exp.lab.pocquebec.org
+        routerName: default
+        conditions:
+          - type: Admitted
+            status: "True"
         wildcardPolicy: None
         routerCanonicalHostname: apps.exp.lab.pocquebec.org
