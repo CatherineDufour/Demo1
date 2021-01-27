@@ -190,6 +190,7 @@ objects:
         forcePull: true
         dockerfilePath: Dockerfile
         buildArgs:
+        #This is an example that we used on our demo vonx blockchain
         #Seed: 000000000000DirecteurEtatCivilQc
         #DID: Ep31SvFAetugFPe5CGzJxt
         #Verkey: 8XbHSBZu5LpTUmDuvmLtfxUNjKzk4Dpm7u6wX2DuPLMj
