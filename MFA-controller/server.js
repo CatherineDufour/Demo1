@@ -9,7 +9,7 @@ const path = require('path');
 const app = express();
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const PORT = process.env.PORT || 15000;
-const HOST_URL = process.env.REACT_APP_ISSUER_HOST_URL || 'http://sqin-demo-registre-quebec-admin.apps.exp.lab.pocquebec.org';
+const HOST_URL = process.env.REACT_APP_ISSUER_HOST_URL || 'http://mfa-agent-admin.apps.exp.lab.pocquebec.org';
 
 console.log("Application started on port " + PORT);
 app.use(express.static(path.join(__dirname, 'build')));
