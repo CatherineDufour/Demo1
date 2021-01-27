@@ -57,7 +57,8 @@ objects:
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
     labels:
-      app.kubernetes.io/part-of: marketplace
+      app: dec-agent
+      app.kubernetes.io/part-of: DEC
   spec:
     strategy:
       type: Recreate
@@ -226,6 +227,7 @@ objects:
     name: dec-agent
     labels:
       app: dec-agent
+      app.kubernetes.io/part-of: DEC
   spec:
     strategy:
       type: Rolling
