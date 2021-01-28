@@ -412,7 +412,7 @@ objects:
           - name: mfa-controller
             image: " "
             ports:
-              - containerPort: 10000
+              - containerPort: 15000
                 protocol: TCP
             resources: {}
             terminationMessagePath: /dev/termination-log
@@ -431,10 +431,10 @@ objects:
     selector:
       app: mfa-controller
     ports:
-      - name: "10000"
+      - name: "15000"
         protocol: TCP
-        port: 10000
-        targetPort: 10000
+        port: 15000
+        targetPort: 15000
 - kind: Route
   apiVersion: v1
   metadata:
@@ -446,7 +446,7 @@ objects:
       name: mfa-controller
       weight: 100
     port:
-      targetPort: 10000
+      targetPort: 15000
     wildcardPolicy: None
   status:
     ingress:
