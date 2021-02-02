@@ -27,7 +27,7 @@ Content-Type: application/json
 
 {
   "schema_name": "IQNIDENTITE",
-  "schema_version": "0.1.1",
+  "schema_version": "0.1.2",
   "attributes": [
     "holder.id", 
     "holder.type", 
@@ -56,7 +56,7 @@ X-API-Key: secret
 {
   "support_revocation": false,
   "tag": "Identite-IQN",
-  "schema_id": "Ep31SvFAetugFPe5CGzJxt:2:IQNIDENTITE:0.1.1"
+  "schema_id": "Ep31SvFAetugFPe5CGzJxt:2:IQNIDENTITE:0.1.2"
 }
 
 ### "credential_definition_id": "Ep31SvFAetugFPe5CGzJxt:3:CL:1653:Identite-IQN"
