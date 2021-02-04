@@ -21,5 +21,13 @@ oc project exp-att-del
 #Démarrer l'installation de l'application du Directeur de l'État Civil du Québec
 oc process -f dec-template.yml | oc apply -f -
 
+#Configurer clé d'accès github (optionel si dépôt privé)
+#Configurer webhook authomatique avec github
+#TODO add explication create schema et cred_def
+
 #Démarrer l'installation du Site Web de l'émetteur
 oc process -f mfa-template.yml | oc apply -f -
+
+#Configurer clé d'accès github (optionel si dépôt privé)
+#Configurer webhook authomatique avec github
+#TODO add explication create schema et cred_def
