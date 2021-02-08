@@ -28,7 +28,7 @@ const ProofIQNIdentiteContainer = (props) => {
                 {t('identite:msgIssueSuccessCompl')}
                 </p>
                 <div className="text-center ">
-                <Button className="mt-2" outline color="primary" size="lg" onClick={() => window.open("http://gard-tout-petits.apps.exp.lab.pocquebec.org/", "_blank")} >{t('identite:btnVerifyCred')}</Button>
+                <Button className="mt-2" outline color="primary" size="lg" onClick={() => window.open("http://mfa-controller.apps.exp.lab.pocquebec.org/", "_blank")} >{t('identite:btnVerifyCred')}</Button>
                 </div>
                 </Col>
             </Row>
