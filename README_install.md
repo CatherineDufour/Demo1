@@ -165,6 +165,15 @@ oc project exp-att-del
 
 ## Configurer clé d'accès github (optionel seulement si votre dépôt GitHub est privé)
 
+### Créer le répertoire des clés
+
+Ce répertoire faisant partie du .gitignore vous permettra de ne pas divulger vos paires de clés cryptographiques.
+
+```bash
+mkdir .ssh
+cd .ssh
+```
+
 ### Créer les clés de déploiment SSH
 
 ```bash
