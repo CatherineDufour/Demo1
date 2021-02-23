@@ -69,6 +69,10 @@ objects:
     strategy:
       type: Recreate
     triggers:
+    - github:
+        secretReference:
+          name: dec-build
+      type: GitHub
     - type: ImageChange
       imageChangeParams:
         automatic: true
@@ -253,6 +257,10 @@ objects:
       resources: {}
       activeDeadlineSeconds: 21600
     triggers:
+      - github:
+          secretReference:
+            name: dec-build
+        type: GitHub
       - type: ConfigChange
       - type: ImageChange
         imageChangeParams:
@@ -403,6 +411,10 @@ objects:
       resources: {}
       activeDeadlineSeconds: 21600
     triggers:
+      - github:
+          secretReference:
+            name: dec-build
+        type: GitHub
       - type: ConfigChange
       - type: ImageChange
         imageChangeParams:
