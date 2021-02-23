@@ -38,12 +38,9 @@ organisme émetteur qui connait la relation
 
 # 1.0 Objectifs
 
-- Explorer les concepts techniques permettant de soutenir la relation
-  détenteur-sujet d'une attestation.
+- Explorer les concepts techniques permettant de soutenir la relation détenteur-sujet d'une attestation.
 
-- Évaluer des modèles permettant de soutenir la relation parent-enfant
-  pour l'attestation d'identité gouvernementale lorsque l'émetteur
-  connait la relation.
+- Évaluer des modèles permettant de soutenir la relation parent-enfant pour l'attestation d'identité gouvernementale lorsque l'émetteur connait la relation.
 
 # 2.0 Contexte
 
