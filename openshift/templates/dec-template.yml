@@ -10,6 +10,12 @@ objects:
 - kind: Secret
   apiVersion: v1
   metadata:
+    name: dec-build
+  stringData:
+    WebHookSecretKey: "${GITHUB_WEBHOOK_SECRET}"
+- kind: Secret
+  apiVersion: v1
+  metadata:
     name: dec-wallet
     annotations:
       template.openshift.io/expose-username: "{.data['database-user']}"
@@ -457,3 +463,9 @@ objects:
             status: "True"
         wildcardPolicy: None
         routerCanonicalHostname: apps.exp.lab.pocquebec.org
+parameters:
+- name: GITHUB_WEBHOOK_SECRET
+  description: A secret string used to configure the GitHub webhook for the marketplace app build
+  generate: expression 
+  from: "[a-zA-Z0-9]{40}"
+  required: true

@@ -182,6 +182,8 @@ ssh-keygen -C "openshift-source-builder/exp-att-del@github" -f exp-att-del -N ''
 
 ### Configurer la clé privée de déploiment dans le projet OpenShift
 
+**TODO** REMPLACER CETTE ÉTAPE PAR L'AJOUT D'UNE VARIABLE SECRET DANS LE TEMPLATE OPENSHIFT ET POINTER SUR LA CLÉ LORS DE L'EXÉCUTION DU TEMPLATE OPENSHIFT
+
 ```bash
 oc create secret generic exp-att-del --from-file=ssh-privatekey=exp-att-del --type=kubernetes.io/ssh-auth
 ```
