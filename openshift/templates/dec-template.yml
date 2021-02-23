@@ -228,6 +228,10 @@ objects:
       git:
         uri: 'https://github.com/CQEN-QDCE/Demo1.git'
     triggers:
+      - github:
+          secretReference:
+            name: dec-build
+        type: GitHub
       - type: ConfigChange
     runPolicy: Serial
 - kind: DeploymentConfig
@@ -375,6 +379,10 @@ objects:
         dockerfilePath: Dockerfile
       type: Docker
     triggers:
+      - github:
+          secretReference:
+            name: dec-build
+        type: GitHub
       - type: ConfigChange
 - kind: DeploymentConfig
   apiVersion: v1
