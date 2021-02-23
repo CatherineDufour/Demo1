@@ -76,7 +76,7 @@ Temporary Items
 
 
 # **************************************************************************************
-#  L I S T E   D E S   F I C H I E R S   I G N O R E S   C R E E   P A R   m a c O S   *
+#  L I S T E   D E S   F I C H I E R S   I G N O R E S   C R E E   P A R   Windows   *
 # **************************************************************************************
 #
 ### Windows ###
@@ -105,8 +105,13 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# **************************************************************************************
 # Fichiers divers du projet, à ne pas commiter
+# **************************************************************************************
 REQ.attestation.http
 REQ.issuer.http
 dev
 *.tar.gz
+
+# répertoire des paires de clés à ne pas divulger
+**/*.ssh*
