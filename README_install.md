@@ -208,7 +208,7 @@ Copier la clé sur Mac OSX
 cat exp-att-del.pub | pbcopy
 ```
 
-Ouvrir votre dépôt github, le notre est: https://github.com/CQEN-QDCE/demo2
+Ouvrir votre dépôt github, le notre est: https://github.com/CQEN-QDCE/demo1
 
 - Dans l'onglet 'Settings',
 - sous onglet 'Deploy keys',
@@ -217,6 +217,8 @@ Ouvrir votre dépôt github, le notre est: https://github.com/CQEN-QDCE/demo2
 - et coller le contenu de la clé publique récupérée avec la commande xclip ou pbcopy (CTRL-V) ou (CMD-V)
 
 ### Supprimer les fichiers de clés.
+
+**TODO** RETIRER LA SECTION MAINTENANT QUE LE RÉPERTOIRE .ssh EST DANS LE .gitignore
 
 ```
 rm exp-att-del && rm exp-att-del.pub
@@ -227,7 +229,7 @@ rm exp-att-del && rm exp-att-del.pub
 ## Démarrer l'installation des controlleurs
 
 ```bash
-oc process -f dec-template.yml | oc apply -f -
+oc process -f openshift/templates/dec-template.yml -p GITHUB_WEBHOOK_SECRET=`cat .ssh/exp-att-del.pub` | oc apply -f -
 ```
 
 #Configurer webhook authomatique avec github
