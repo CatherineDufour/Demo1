@@ -1,3 +1,5 @@
+[<--- Retour](README.md)
+
 # Demo 1 - Attestation déléguée
 
 ---
@@ -6,11 +8,11 @@ L'environnement d'expérimentation du CQEN est basé sur AWS & OpenShift (OKD).
 
 Pour reproduire l'expérimentation vous allez installer les composants suivants:
 
-- une chaîne de bloc
-- Un explorateur de bloc
-- une base de donnée (portefeuille)
+- une chaîne de bloc (Blockchain)
+- un explorateur de bloc (Ledger Client)
+- une base de donnée (kms - key management service)
 - un agent de communication (Agent)
-- un site web (controlleur)
+- un site web comme controlleur (controller)
 
 ---
 
@@ -20,9 +22,11 @@ TODO
 
 ---
 
-## [Optionel] Configurer le Portefeuille
+## [Optionel] Configurer la base de donnée
 
 Nous utilisons dans les scripts de déploiements la base de donnée postgreSQL offert dans le marketplace d'OpenShift.
+
+Note historique: le gouvernement de la province de la Colombie-Britannique au Canada a mis en œuvre et contribué au projet "Hyperledger Indy" une implémentation utilisant la base de données PostgreSQL pour les déploiements en entreprise.
 
 ### Au besoin vous pouvez éditer les variables d'environnement des bases de données dans les fichiers suivants:
 
@@ -34,22 +38,22 @@ Nous utilisons dans les scripts de déploiements la base de donnée postgreSQL o
           - name: POSTGRESQL_USER
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-user
           - name: POSTGRESQL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-password
           - name: POSTGRESQL_DATABASE
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-name
           - name: POSTGRESQL_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-admin-password
 ```
 
@@ -229,7 +233,15 @@ rm exp-att-del && rm exp-att-del.pub
 ## Démarrer l'installation des controlleurs
 
 ```bash
-oc process -f openshift/templates/dec-template.yml -p GITHUB_WEBHOOK_SECRET=`cat .ssh/exp-att-del.pub` | oc apply -f -
+oc process -f openshift/templates/dec-template.yml -p GITHUB_WEBHOOK_SECRET=`cat .ssh/exp-att-del` | oc apply -f -
+```
+
+```bash
+oc process -f openshift/templates/dec-template.yml -p GITHUB_WEBHOOK_SECRET=ssh-privatekey=`cat .ssh/exp-att-del` | oc apply -f -
+```
+
+```bash
+oc process -f openshift/templates/dec-template.yml -p GITHUB_WEBHOOK_SECRET='$(cat .ssh/exp-att-del)' | oc apply -f -
 ```
 
 #Configurer webhook authomatique avec github
@@ -283,3 +295,5 @@ oc process -f mfa-template.yml | oc apply -f -
 #Configurer clé d'accès github (optionel si dépôt privé)
 #Configurer webhook authomatique avec github
 #TODO add explication create schema et cred_def
+
+[<--- Retour](README.md)

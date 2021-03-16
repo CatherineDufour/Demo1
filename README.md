@@ -57,7 +57,7 @@ régler les contraintes et particularités d'un cas d'affaires concret.
 > faire, la mère d'Alice fait une demande au Guichet unique d'accès aux
 > places en service de garde._
 
-![](media/image1.emf){width="6.5in" height="2.1326388888888888in"}
+![Contexte d'Alice](images/Contexte1.png)
 
 1.  Le DEC consigne la naissance d'Alice dans ses systèmes;
 
@@ -92,7 +92,8 @@ régler les contraintes et particularités d'un cas d'affaires concret.
 
 # 3.0 Environnement de test
 
-![](media/image2.tiff){width="3.8472222222222223in" height="4.375in"}
+- [Procédure d'installation](README_install.md)
+  ![Environnement de test](images/EnvironnementTest1.png)
 
 # 4.0 Conditions initiales et prémisses
 
