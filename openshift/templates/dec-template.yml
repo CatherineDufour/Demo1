@@ -6,7 +6,7 @@ metadata:
     description: Site Web qui émet l'attestation pour les expérimentations d'une attestation délégué.
     tags: cqen, experimentation, sqin, aries, dec, directeur de l'état civil, émetteur, attestation, délégué
 objects:
-#DEC-wallet (PostgreSQL)
+#DEC-kms (PostgreSQL)
 - kind: Secret
   apiVersion: v1
   metadata:
@@ -16,7 +16,7 @@ objects:
 - kind: Secret
   apiVersion: v1
   metadata:
-    name: dec-wallet
+    name: dec-kms
     annotations:
       template.openshift.io/expose-username: "{.data['database-user']}"
       template.openshift.io/expose-password: "{.data['database-password']}"
@@ -28,20 +28,20 @@ objects:
     database-password: "dbpassword"
     database-admin-user: "postgres"
     database-admin-password: "dbadminpassword"
-    database-name: "wallets"
+    database-name: "kms"
 - kind: Service
   apiVersion: v1
   metadata:
-    name: dec-wallet
+    name: dec-kms
   spec:
     ports:
-    - name: dec-wallet
+    - name: dec-kms
       protocol: TCP
       port: 5432
       targetPort: 5432
       nodePort: 0
     selector:
-      name: dec-wallet
+      name: dec-kms
     type: ClusterIP
     sessionAffinity: None
   status:
@@ -49,7 +49,7 @@ objects:
 - kind: PersistentVolumeClaim
   apiVersion: v1
   metadata:
-    name: dec-wallet
+    name: dec-kms
   spec:
     accessModes:
     - ReadWriteOnce
@@ -59,11 +59,11 @@ objects:
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
-    name: dec-wallet
+    name: dec-kms
     annotations:
       template.alpha.openshift.io/wait-for-ready: 'true'
     labels:
-      app: dec-wallet
+      app: dec-kms
       app.kubernetes.io/part-of: DEC
   spec:
     strategy:
@@ -77,7 +77,7 @@ objects:
       imageChangeParams:
         automatic: true
         containerNames:
-        - dec-wallet
+        - dec-kms
         from:
           kind: ImageStreamTag
           name: postgresql:10
@@ -86,14 +86,14 @@ objects:
     - type: ConfigChange
     replicas: 1
     selector:
-      name: dec-wallet
+      name: dec-kms
     template:
       metadata:
         labels:
-          name: dec-wallet
+          name: dec-kms
       spec:
         containers:
-        - name: dec-wallet
+        - name: dec-kms
           image: " "
           ports:
           - containerPort: 5432
@@ -115,28 +115,28 @@ objects:
           - name: POSTGRESQL_USER
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-user
           - name: POSTGRESQL_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-password
           - name: POSTGRESQL_DATABASE
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-name
           - name: POSTGRESQL_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-admin-password                
           resources:
             limits:
               memory: 512Mi
           volumeMounts:
-          - name: dec-wallet-data
+          - name: dec-kms-data
             mountPath: "/var/lib/pgsql/data"
           terminationMessagePath: "/dev/termination-log"
           imagePullPolicy: IfNotPresent
@@ -145,9 +145,9 @@ objects:
             capabilities: {}
             privileged: false
         volumes:
-        - name: dec-wallet-data
+        - name: dec-kms-data
           persistentVolumeClaim:
-            claimName: dec-wallet
+            claimName: dec-kms
         restartPolicy: Always
         dnsPolicy: ClusterFirst
   status: {}
@@ -177,25 +177,25 @@ objects:
       dockerStrategy:
         noCache: true
         env:
-          - name: POSTGRESQL_WALLET_USER
+          - name: POSTGRESQL_KMS_USER
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-user
-          - name: POSTGRESQL_WALLET_PASSWORD
+          - name: POSTGRESQL_KMS_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-password
-          - name: POSTGRESQL_WALLET_ADMIN_USER
+          - name: POSTGRESQL_KMS_ADMIN_USER
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-admin-user
-          - name: POSTGRESQL_WALLET_ADMIN_PASSWORD
+          - name: POSTGRESQL_KMS_ADMIN_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: dec-wallet
+                name: dec-kms
                 key: database-admin-password
         forcePull: true
         dockerfilePath: Dockerfile
@@ -209,8 +209,8 @@ objects:
           value: 000000000000DirecteurEtatCivilQc
         - name: ISSUER_AGENT_ENDPOINT
           value: 'http://dec-agent.apps.exp.lab.pocquebec.org'
-        - name: ISSUER_WALLET_KEY
-          value: Issuer1Wallet
+        - name: ISSUER_KMS_KEY
+          value: Issuer1kms
         - name: ISSUER_ADMIN_API_KEY
           value: secret
         - name: ISSUER_HOSTNAME
@@ -221,9 +221,9 @@ objects:
           value: '8000'
         - name: API_PORT
           value: '3000'
-        - name: ISSUER_POSTGRESQL_WALLET_HOST
-          value: dec-wallet
-        - name: ISSUER_POSTGRESQL_WALLET_PORT
+        - name: ISSUER_POSTGRESQL_KMS_HOST
+          value: dec-kms
+        - name: ISSUER_POSTGRESQL_KMS_PORT
           value: '5432'
     postCommit: {}
     source:
