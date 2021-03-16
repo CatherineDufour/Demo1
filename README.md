@@ -93,7 +93,7 @@ régler les contraintes et particularités d'un cas d'affaires concret.
 # 3.0 Environnement de test
 
 - [Procédure d'installation](README_install.md)
-  ![Environnement de test](images/EnvironnementTest1.png)
+  ![Environnement de test](images/EnvironnementTest.png)
 
 # 4.0 Conditions initiales et prémisses
 
