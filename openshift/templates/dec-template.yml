@@ -24,11 +24,11 @@ objects:
       template.openshift.io/expose-password: "{.data['database-admin-password']}"
       template.openshift.io/expose-password: "{.data['database-name']}"
   stringData:
-    database-user: "dbuser"
-    database-password: "dbpassword"
-    database-admin-user: "postgres"
-    database-admin-password: "dbadminpassword"
-    database-name: "kms"
+    database-user: "${POSTGRESQL_USER}"
+    database-password: "${POSTGRESQL_PASSWORD}"
+    database-admin-user: "${POSTGRESQL_ADMIN_USER}"
+    database-admin-password: "${POSTGRESQL_ADMIN_PASSWORD}"
+    database-name: "${POSTGRESQL_DATABASE_NAME}"
 - kind: Service
   apiVersion: v1
   metadata:
@@ -489,3 +489,32 @@ parameters:
   generate: expression 
   from: "[a-zA-Z0-9]{40}"
   required: true
+- name: POSTGRESQL_USER
+  displayName: PostgreSQL connection username
+  description: Username for PostgreSQL user that will be used for accessing the database. Needs to be basee64 encoded.
+  required: true
+  generate: "expression"
+  from: "[a-zA-Z0-9]{10}"
+- name: POSTGRESQL_PASSWORD
+  displayName: PostgreSQL connection password
+  description: Password for the PostgreSQL connection user. Needs to be basee64 encoded.
+  required: true
+  generate: "expression"
+  from: "[a-zA-Z0-9]{16}"
+- name: POSTGRESQL_ADMIN_USER
+  displayName: PostgreSQL administrator username
+  description: Username for PostgreSQL user that will be used for accessing the database. Needs to be basee64 encoded.
+  required: true
+  generate: "expression"
+  from: "[a-zA-Z0-9]{10}"
+- name: POSTGRESQL_ADMIN_PASSWORD
+  displayName: PostgreSQL administrator password
+  description: Password for the PostgreSQL administrative account. Needs to be basee64 encoded.
+  required: true
+  generate: "expression"
+  from: "[a-zA-Z0-9]{16}"
+- name: POSTGRESQL_DATABASE_NAME
+  displayName: PostgreSQL database name
+  description: Name of the PostgreSQL database.
+  required: true
+  value: "kms"
