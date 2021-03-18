@@ -1,38 +1,37 @@
-# Table of Contents {#table-of-contents .TOC-Heading}
+# Table of Contents
+
+# Table des matières
 
 1. [Objectifs](#1.0-Objectifs)
 
 2. [Contexte](#2.0-Contexte)
 
-3. [Environnement d\'expérimentation](#3.0-Environnement-d\'expérimentation)
+3. [Environnement d\'expérimentation](#3.0-Environnement-d'expérimentation)
 
    1. [Conditions initiales et prémisses](#3.1-conditions-initiales-et-prémisses)
 
 4. [Démarche](#4.0-démarche)
 
-5. [Attestation d\'identité numérique](#5.0-Attestation-d\'identité-numérique)
+5. [Attestation d\'identité numérique](#5.0-Attestation-d'identité-numérique)
 
 6. [Résultats attendus](#6.0-résultats-attendus)
 
-7. [Expérimentation](#7.0-expérimentation)
+7. [Analyse](#7.0-analyse)
 
-8. [Analyse](#8.0-analyse)
+   1. [Échanges avec le BC](#7.1-Échanges-avec-le-BC)
+   2. [Expérimentations](#7.2-Expérimentations)
+   3. [Personne autonome](#7.3-Personne-autonome)
+      1. [Le détenteur](#7.3.1-Le-détenteur)
+   4. [Autorité parentale](#7.4-Autorité-parentale)
+      1. [Le détenteur parental](#7.4.1-Le-détenteur-parental)
+      2. [Le sujet](#7.4.2-Le-sujet)
+      3. [L\'échéance](#7.4.3-L'échéance)
+      4. [Le statut de révocation](#7.4.4-Le-statut-de-révocation)
+   5. [Attestations et transactions](#7.5-Attestations-et-transactions)
 
-   1. [Échanges avec le BC](#8.1-échanges-avec-le-bc)
-   2. [Expérimentations](#8.2-expérimentations)
-   3. [Personne autonome](#8.3-personne-autonome)
-      1. [Le détenteur](#8.3.1-Le-détenteur)
-   4. [Autorité parentale](#8.4-autorité-parentale)
-      1. [Le détenteur parental](#8.4.1-Le-détenteur-parental)
-      2. [Le sujet](#8.4.2-Le-sujet)
-      3. [L\'échéance](#8.4.3-L\'échéance)
-      4. [Le statut de révocation](#8.4.4-Le-statut-de-révocation)
-   5. [Attestations et transactions](#8.5-attestations-et-transactions)
+8. [Conclusion](#8.0-Conclusion)
 
-9. [Conclusion](#9.0-conclusion)
-
-7.1.0 -- Émission d\'une attestation d\'identité à un représentant par un
-organisme émetteur qui connait la relation
+# Émission d\'une attestation d\'identité à un représentant par un organisme émetteur qui connait la relation
 
 # 1.0 Objectifs
 
@@ -93,6 +92,7 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
     d\'attente;
 
 # 3.0 Environnement d\'expérimentation
+
 L\'environnement d\'expérimentation peut être créé suivant la
 documentation se retrouvant sur ce lien [procédure d\'installation](README_install.md). Elle permet de reproduire l\'installation et l\'exécution de l\'expérimentation.
 
@@ -135,16 +135,18 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 </p>
 
 ## 5.0 Attestation d\'identité numérique
+
 Voici le schéma de l\'attestation d\'identité numérique:
-``` json
+
+```json
 {
   "schema_name": "IQNIDENTITE",
   "schema_version": "0.1.3",
   "attributes": [
-    "holder.id", 
-    "holder.type", 
+    "holder.id",
+    "holder.type",
     "issuanceDate",
-    "expirationDate", 
+    "expirationDate",
     "credentialSubject.id",
     "credentialSubject.firstNames",
     "credentialSubject.lastName",
@@ -153,52 +155,56 @@ Voici le schéma de l\'attestation d\'identité numérique:
     "credentialSubject.birthDate",
     "credentialSubject.fatherFullName",
     "credentialSubject.motherFullName",
-    "credentialSubject.registrationNumber", 
+    "credentialSubject.registrationNumber",
     "credentialSubject.photo"
   ]
 }
 ```
 
 Par exemple, l\'identité de la mère pourrait être composé des valeurs suivantes:
-|Attributs                            | Valeurs                   |
+|Attributs | Valeurs |
 |-------------------------------------|---------------------------|
-|holder.id                            | Espace blanc              |
-|holder.type                          | Espace blanc              |
-|issuanceDate                         | 2020-10-08                |
-|expirationDate                       | Espace blanc              |
-|credentialSubject.id                 | Clé publique du DID privé |
-|credentialSubject.firstNames         | Sarah                     |
-|credentialSubject.lastName           | Courcy                    |
-|credentialSubject.gender             | Féminin                   |
-|credentialSubject.birthplace         | Ville de Québec, Qc, Ca   |
-|credentialSubject.birthDate          | 1976-11-08                |
-|credentialSubject.fatherFullName     | Mathieu Courcy            |
-|credentialSubject.motherFullName     | Marie Courcy              |
-|credentialSubject.registrationNumber | 2aaf7216-1bf0             |
-|credentialSubject.photo              | Data de la photo          |
+|holder.id | Espace blanc |
+|holder.type | Espace blanc |
+|issuanceDate | 2020-10-08 |
+|expirationDate | Espace blanc |
+|credentialSubject.id | Clé publique du DID privé |
+|credentialSubject.firstNames | Sarah |
+|credentialSubject.lastName | Courcy |
+|credentialSubject.gender | Féminin |
+|credentialSubject.birthplace | Ville de Québec, Qc, Ca |
+|credentialSubject.birthDate | 1976-11-08 |
+|credentialSubject.fatherFullName | Mathieu Courcy |
+|credentialSubject.motherFullName | Marie Courcy |
+|credentialSubject.registrationNumber | 2aaf7216-1bf0 |
+|credentialSubject.photo | Data de la photo |
+
 ---
+
 <b>Tableau 1 - Données de l\'attestation d\'identité de la mère</b>
 
->Vous remarquerez que nous utilisons un espace blanc lorsque la valeur est null. Les valeurs null ne sont pas pris en charge dans un format json.
+> Vous remarquerez que nous utilisons un espace blanc lorsque la valeur est null. Les valeurs null ne sont pas pris en charge dans un format json.
 
 Autre exemple, l\'identité de l\'enfant pourrait être composé des valeurs suivantes:
-|Attributs                            | Valeurs                             |
+|Attributs | Valeurs |
 |-------------------------------------|-------------------------------------|
-|holder.id                            | Clé publique du DID privé du parent |
-|holder.type                          | parent                              |
-|issuanceDate                         | 2020-10-08                          |
-|expirationDate                       | La date de majorité de l'enfant     |
-|credentialSubject.id                 | Clé publique du DID privé           |
-|credentialSubject.firstNames         | Alice                               |
-|credentialSubject.lastName           | Courcy                              |
-|credentialSubject.gender             | Féminin                             |
-|credentialSubject.birthplace         | Ville de Québec, Qc, Ca             |
-|credentialSubject.birthDate          | 2020-10-06                          |
-|credentialSubject.fatherFullName     | Michel Courcy                       |
-|credentialSubject.motherFullName     | Sarah Courcy                        |
-|credentialSubject.registrationNumber | 4883-bcd7                           |
-|credentialSubject.photo              | Espace blanc                        |
+|holder.id | Clé publique du DID privé du parent |
+|holder.type | parent |
+|issuanceDate | 2020-10-08 |
+|expirationDate | La date de majorité de l'enfant |
+|credentialSubject.id | Clé publique du DID privé |
+|credentialSubject.firstNames | Alice |
+|credentialSubject.lastName | Courcy |
+|credentialSubject.gender | Féminin |
+|credentialSubject.birthplace | Ville de Québec, Qc, Ca |
+|credentialSubject.birthDate | 2020-10-06 |
+|credentialSubject.fatherFullName | Michel Courcy |
+|credentialSubject.motherFullName | Sarah Courcy |
+|credentialSubject.registrationNumber | 4883-bcd7 |
+|credentialSubject.photo | Espace blanc |
+
 ---
+
 <b>Tableau 2 - Données de l\'attestation d\'identité de l'enfant</b>
 
 # 6.0 Résultats attendus
@@ -253,12 +259,14 @@ La vérification permet de valider :
   - Le type de relation : _parent_ ;
 
   - La date de naissance d\'Alice;
----
-**TODO CHANGER LA NUMÉROTATION À PARTIR D'ICI**
----
-# 8.0 Analyse
 
-## 8.1 Échanges avec le BC
+---
+
+## **TODO CHANGER LA NUMÉROTATION À PARTIR D'ICI**
+
+# 7.0 Analyse
+
+## 7.1 Échanges avec le BC
 
 La relation représentant la cellule familiale n\'est pas la plus facile à
 gérer. Elle est, bien entendu, régie par des aspects juridiques. Ces
@@ -313,18 +321,18 @@ d\'attestation :
   mesure de posséder un portefeuille numérique ET que les lois qui
   s\'appliquent lui permettent d\'en faire la demande.
 
-## 8.2 Expérimentations
+## 7.2 Expérimentations
 
 Dans un modèle simple de contrôle indirect de l\'identité, c\'est la
 relation _détenteur -- sujet_ qui permet ultimement à un individu de
 « posséder » une attestation traitant d\'un autre individu.
 
-### 8.3 Personne autonome
+### 7.3 Personne autonome
 
 Dans le cas d\'une personne autonome, la relation est simple le détenteur
 est le sujet de l\'attestation.
 
-#### 8.3.1 Le détenteur
+#### 7.3.1 Le détenteur
 
 Nous avons émis l\'hypothèse que si le détenteur est le sujet, il n\'est
 pas nécessaire de spécifier le champ *holder* : la relation est
@@ -332,12 +340,12 @@ implicitement définie. Après expérimentation, il semble que le champ
 _holder_ ne peut être omis : ses valeurs peuvent être fixées à _nul_
 cependant.
 
-### 8.4 Autorité parentale
+### 7.4 Autorité parentale
 
 Dans le cas de l\'autorité parentale, la relation est encore simple : le
 détenteur est le parent et sujet de l\'attestation est l\'enfant.
 
-#### 8.4.1 Le détenteur parental
+#### 7.4.1 Le détenteur parental
 
 Ce cas de figure est représenté dans l\'expérimentation par l\'émission
 d\'une l\'attestation d\'identité à la mère d\'Alice. Le schéma du
@@ -375,7 +383,7 @@ qui veut son bien et un autre consommateur pourrait s\'intéresser aux
 aspects _père_ et _biologique_ pour valider la pertinence ou non de
 faire un test d\'ADN.
 
-#### 8.4.2 Le sujet
+#### 7.4.2 Le sujet
 
 Le sujet est représenté dans l\'attestation par un DID :
 
@@ -389,7 +397,7 @@ lui générer un DID. L\'utilisation d\'un portefeuille numérique pouvant
 gérer plusieurs identités est une avenue potentielle qui permettrait à
 un parent de générer ce DID initial.
 
-#### 8.4.3 L\'échéance
+#### 7.4.3 L\'échéance
 
 La date d\'échéance est une valeur arbitraire fixée lors de l\'émission.
 Elle relève des règles d\'affaires de l\'émetteur. Par exemple, dans le
@@ -412,14 +420,14 @@ fournir aux développeurs certains _validateurs_ standardisés pour
 faciliter leur tâche. Cet aspect ne relève pas de la présente
 expérimentation.
 
-#### 8.4.4 Le statut de révocation
+#### 7.4.4 Le statut de révocation
 
 Le statut de l\'attestation i.e. si elle est révoquée ou non doit faire
 partie du processus de vérification du consommateur. C\'est l\'émetteur de
 l\'attestation qui décide si l\'attestation est révoquée ou non selon ses
 propres règles d\'affaires.
 
-### 8.5 Attestations et transactions
+### 7.5 Attestations et transactions
 
 Même si ce n\'était pas le sujet, il est important de mentionner que
 l\'expérimentation nous a permis de réaliser un aspect fondamental de la
@@ -434,7 +442,7 @@ l\'expérimentation devrait donc être le suivant :
 ![](media/image5.tiff){width="4.097222222222222in"
 height="4.208333333333333in"}
 
-# 9.0 Conclusion
+# 8.0 Conclusion
 
 L\'expérimentation nous a permis d\'explorer les concepts soutenant la
 relation _sujet-détenteur_ dans une attestation. La prémisse étant que
