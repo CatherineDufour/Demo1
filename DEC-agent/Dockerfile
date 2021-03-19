@@ -46,5 +46,5 @@ ENTRYPOINT ["/bin/bash", "-c", "aca-py start  --inbound-transport http 0.0.0.0 $
     --admin-insecure-mode \
     --wallet-storage-type 'postgres_storage' \
     --wallet-storage-config '{\"url\":\"'\"$POSTGRESQL_WALLET_HOST\"':'\"$POSTGRESQL_WALLET_PORT\"'\",\"max_connections\":5}' \
-    --wallet-storage-creds '{\"account\":\"'\"$POSTGRESQL_WALLET_USER\"'\",\"password\":\"'\"$POSTGRESQL_WALLET_PASSWORD\"'\",\"admin_account\":\"'\"$POSTGRESQL_WALLET_ADMIN_USER\"'\",\"admin_password\":\"'\"$POSTGRESQL_WALLET_ADMIN_PASSWORD\"'\"}' \
+    --wallet-storage-creds '{\"account\":\"'\"$POSTGRESQL_KMS_USER\"'\",\"password\":\"'\"$POSTGRESQL_KMS_PASSWORD\"'\",\"admin_account\":\"'\"$POSTGRESQL_KMS_ADMIN_USER\"'\",\"admin_password\":\"'\"$POSTGRESQL_KMS_ADMIN_PASSWORD\"'\"}' \
     --genesis-url $GENESIS", "--"]
