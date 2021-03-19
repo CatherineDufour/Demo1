@@ -1,6 +1,8 @@
-# Table of Contents
+# Attester une délégation dans le cadre de l\'identité numérique
 
-# Table des matières
+Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le concept de l\'identité numérique. Le sujet: l\'émission d\'une attestation d\'identité à un représentant par un organisme émetteur qui connait la relation.
+
+## Table des matières
 
 1. [Objectifs](#1.0-Objectifs)
 
@@ -31,7 +33,7 @@
 
 8. [Conclusion](#8.0-Conclusion)
 
-# Émission d\'une attestation d\'identité à un représentant par un organisme émetteur qui connait la relation
+---
 
 # 1.0 Objectifs
 
@@ -57,7 +59,7 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 <p align="center">
   <img src="images/Contexte1.png" label="Contexte d\'Alice">
   <br>
-  <b>Contexte de l\'histoire d\'Alice</b>
+  <b>Contexte de l'histoire d'Alice</b>
 </p>
 
 1.  Le DEC consigne la naissance d\'Alice dans ses systèmes;
@@ -93,8 +95,8 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 
 # 3.0 Environnement d\'expérimentation
 
-L\'environnement d\'expérimentation peut être créé suivant la
-documentation se retrouvant sur ce lien [procédure d\'installation](README_install.md). Elle permet de reproduire l\'installation et l\'exécution de l\'expérimentation.
+L\'environnement d\'expérimentation peut être créé et reproduit en suivant la
+documentation se retrouvant sur ce lien [procédure d\'installation](README_install.md). Elle permet l/'installation et l/'exécution de l\'expérimentation.
 
 ## 3.1 Conditions initiales et prémisses
 
@@ -123,20 +125,20 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 # 4.0 Démarche
 
 <p align="center">
-  <img src="images/Démarche1.png" label="Émission d'une attestation d'on le suet n'est pas le détenteur">
+  <img src="images/Démarche1.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur">
   <br>
   <b>Diagramme de séquence - Émission d'attestation</b>
 </p>
 
 <p align="center">
-  <img src="images/Démarche2.png" label="Émission d'une attestation d'on le suet n'est pas le détenteur">
+  <img src="images/Démarche2.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur">
   <br>
   <b>Diagramme de séquence - Vérification d'attestation</b>
 </p>
 
-## 5.0 Attestation d\'identité numérique
+## 5.0 Le contenu de l'/Attestation
 
-Voici le schéma de l\'attestation d\'identité numérique:
+Voici le schéma de données utilisé pour l\'attestation d\'identité numérique ainsi que pour sa délégation:
 
 ```json
 {
@@ -163,7 +165,7 @@ Voici le schéma de l\'attestation d\'identité numérique:
 
 Par exemple, l\'identité de la mère pourrait être composé des valeurs suivantes:
 |Attributs | Valeurs |
-|-------------------------------------|---------------------------|
+|----------|---------|
 |holder.id | Espace blanc |
 |holder.type | Espace blanc |
 |issuanceDate | 2020-10-08 |
@@ -187,7 +189,7 @@ Par exemple, l\'identité de la mère pourrait être composé des valeurs suivan
 
 Autre exemple, l\'identité de l\'enfant pourrait être composé des valeurs suivantes:
 |Attributs | Valeurs |
-|-------------------------------------|-------------------------------------|
+|----------|---------|
 |holder.id | Clé publique du DID privé du parent |
 |holder.type | parent |
 |issuanceDate | 2020-10-08 |
@@ -261,8 +263,6 @@ La vérification permet de valider :
   - La date de naissance d\'Alice;
 
 ---
-
-## **TODO CHANGER LA NUMÉROTATION À PARTIR D'ICI**
 
 # 7.0 Analyse
 
@@ -345,13 +345,15 @@ cependant.
 Dans le cas de l\'autorité parentale, la relation est encore simple : le
 détenteur est le parent et sujet de l\'attestation est l\'enfant.
 
-#### 7.4.1 Le détenteur parental
+#### 7.4.1 Le détenteur
 
 Ce cas de figure est représenté dans l\'expérimentation par l\'émission
 d\'une l\'attestation d\'identité à la mère d\'Alice. Le schéma du
 _Verifiable Credential_ défini par le W3C comporte un champ _holder_.
 
-\"holder\": {\"\@id\": \"cred:holder\", \"\@type\": \"\@id\"}
+```json
+"holder": {"@id": "cred:holder", "@type": "@id"}
+```
 
 Le champ _id_ est destiné à identifier le détenteur à l\'aide d\'un DID.
 L\'expérimentation soulève plusieurs questionnements concernant
@@ -387,8 +389,10 @@ faire un test d\'ADN.
 
 Le sujet est représenté dans l\'attestation par un DID :
 
-\"credentialSubject\": {\"\@id\": \"cred:credentialSubject\",
-\"\@type\": \"\@id\"}
+```json
+"credentialSubject": {"@id": "cred:credentialSubject",
+"@type": "@id"}
+```
 
 En plus des questions soulevées pour l\'identification du détenteur, le
 DID d\'un bébé naissant est problématique. Alice n\'est pas en mesure de
@@ -439,8 +443,11 @@ et d\'une définition d\'attestation. L\'impact est positif sur la capacité
 et les performances des infrastructures. Le diagramme de séquence de
 l\'expérimentation devrait donc être le suivant :
 
-![](media/image5.tiff){width="4.097222222222222in"
-height="4.208333333333333in"}
+<p align="center">
+  <img src="images/AttestationTransaction1.png" label="Émission d'une attestation d'on le sujet n'est pas le détenteur">
+  <br>
+  <b>Diagramme de séquence de l'expérimentation</b>
+</p>
 
 # 8.0 Conclusion
 
