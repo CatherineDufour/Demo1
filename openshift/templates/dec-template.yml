@@ -24,7 +24,6 @@ objects:
       template.openshift.io/expose-password: "{.data['database-admin-password']}"
       template.openshift.io/expose-password: "{.data['database-name']}"
   stringData:
-    database-user: "${POSTGRESQL_USER}"
     database-password: "${POSTGRESQL_PASSWORD}"
     database-admin-user: "postgres"
     database-admin-password: "${POSTGRESQL_ADMIN_PASSWORD}"
@@ -489,12 +488,6 @@ parameters:
   generate: expression 
   from: "[a-zA-Z0-9]{40}"
   required: true
-- name: POSTGRESQL_USER
-  displayName: PostgreSQL connection username
-  description: Username for PostgreSQL user that will be used for accessing the database. Needs to be basee64 encoded.
-  required: true
-  generate: "expression"
-  from: "[a-zA-Z0-9]{10}"
 - name: POSTGRESQL_PASSWORD
   displayName: PostgreSQL connection password
   description: Password for the PostgreSQL connection user. Needs to be basee64 encoded.
