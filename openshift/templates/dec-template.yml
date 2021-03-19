@@ -24,6 +24,7 @@ objects:
       template.openshift.io/expose-password: "{.data['database-admin-password']}"
       template.openshift.io/expose-password: "{.data['database-name']}"
   stringData:
+    database-user: "dbuser"
     database-password: "${POSTGRESQL_PASSWORD}"
     database-admin-user: "postgres"
     database-admin-password: "${POSTGRESQL_ADMIN_PASSWORD}"
