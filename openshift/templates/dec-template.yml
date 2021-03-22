@@ -335,7 +335,7 @@ objects:
               - name: AGENT_NAME
                 value: ${AGENT_LABEL_NAME}
               - name: AGENT_ENDPOINT
-                value: 'Replace with agent route location'
+                value: 'http://dec-agent.apps.exp.lab.pocquebec.org'
               - name: AGENT_LOG_LEVEL
                 value: ${LOG_LEVEL}
               - name: TIMING
@@ -605,16 +605,14 @@ parameters:
   value: "5432"
 - name: WALLET_STORAGE_TYPE
   displayName: Wallet Storage Type
-  description:
-    The wallet storage type.  Your choice of 'postgres' or 'sqlite' at
-    the moment.  If not defined, defaults to 'sqlite' for compatibility
+  description: The wallet storage type.  Your choice of 'postgres' or 'sqlite' at the moment.  If not defined, defaults to 'sqlite' for compatibility
   required: false
   value: postgres_storage
 - name: AGENT_ADMIN_PORT
   displayName: Agent Admin Port
   description: The admin port on which the service will listen.
   required: true
-  value: "8024"
+  value: "3000"
 - name: WALLET_KEY
   displayName: Wallet Encryption Key
   description: The encryption key to be used for the wallets.
@@ -625,12 +623,12 @@ parameters:
   displayName: Agent DID seed.
   description: Seed used to create the agent DID.
   required: true
-  value: "000000000000000000000000Steward1"
+  value: "000000000000DirecteurEtatCivilQc"
 - name: AGENT_DID
   displayName: Indy agent DID
   description: The public DID associated to the agent.
   required: false
-  value: "Th7MpTaRZVRYnPiabds81Y"
+  value: "Ep31SvFAetugFPe5CGzJxt"
 - name: ADMIN_API_KEY
   displayName: Agent Admin API Key
   description: The key used to authenticate client requests to the admin api.
@@ -656,3 +654,13 @@ parameters:
   description: Enable/Disable the read only ledger flag.  Controls the inclusion/exclusion of the agent '--read-only-ledger' startup parameter.  Defaults to disabled.
   required: false
   value: ''
+- name: AGENT_LABEL_NAME
+  displayName: Agent Label/Name
+  description: The label/name of the agent.
+  required: true
+  value: 'Directeur État Civil'
+- name: AGENT_HTTP_PORT
+  displayName: Agent Http Port
+  description: The http port on which the service will listen.
+  required: true
+  value: "8000"
