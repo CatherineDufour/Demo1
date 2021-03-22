@@ -261,8 +261,8 @@ objects:
                 --wallet-name "$(echo ${AGENT_WALLET_NAME} | tr '[:upper:]' '[:lower:]' | sed "s~-~_~g")"
                 --wallet-key "${WALLET_KEY}"
                 --wallet-storage-type "${WALLET_TYPE}"
-                --wallet-storage-config '{\"url\":\"${POSTGRESQL_WALLET_HOST}:${POSTGRESQL_WALLET_PORT}\",\"max_connections\":5}'
-                --wallet-storage-creds '{\"account\":\"${POSTGRESQL_KMS_USER}\",\"password\":\"${POSTGRESQL_KMS_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_KMS_ADMIN_USER}\",\"admin_password\":\"${POSTGRESQL_KMS_ADMIN_PASSWORD}\"}'
+                --wallet-storage-config "$(eval echo \"${WALLET_STORAGE_CONFIGURATION}\")"
+                --wallet-storage-creds "$(eval echo \"${WALLET_STORAGE_CREDENTIALS}\")"
                 $([ ! -z "${INDY_WALLET_SEED}" ] && echo "--seed ${INDY_WALLET_SEED}" || echo "")
                 $([ ! -z "${AGENT_ADMIN_API_KEY}" ] && echo "--admin-api-key ${AGENT_ADMIN_API_KEY}" || echo "--admin-insecure-mode")
                 --label "${AGENT_NAME}"
@@ -278,6 +278,10 @@ objects:
                 value: ${WALLET_STORAGE_TYPE}
               - name: POSTGRESQL_WALLET_HOST
                 value: ${WALLET_HOST}
+              - name: WALLET_STORAGE_CONFIGURATION
+                value: ${WALLET_STORAGE_CONFIG}
+              - name: WALLET_STORAGE_CREDENTIALS
+                value: ${WALLET_STORAGE_CREDS}
               - name: POSTGRESQL_WALLET_PORT
                 value: ${WALLET_HOST_PORT}
               - name: WALLET_STORAGE_CONFIGURATION
@@ -635,3 +639,13 @@ parameters:
   required: true
   generate: "expression"
   from: "[a-zA-Z0-9]{16}"
+- name: WALLET_STORAGE_CONFIG
+  displayName: Wallet Storage Configuration
+  required: true
+  description: Wallet storage configuration
+  value: '{\"url\":\"${POSTGRESQL_WALLET_HOST}:${POSTGRESQL_WALLET_PORT}\",\"max_connections\":5}'
+- name: WALLET_STORAGE_CREDS
+  displayName: Wallet Storage Credential Configuration
+  required: true
+  description: Wallet storage credential configuration
+  value: '{\"account\":\"${POSTGRESQL_KMS_USER}\",\"password\":\"${POSTGRESQL_KMS_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_KMS_ADMIN_USER}\",\"admin_password\":\"${POSTGRESQL_KMS_ADMIN_PASSWORD}\"}'
