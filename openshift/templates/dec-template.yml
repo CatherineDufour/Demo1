@@ -262,7 +262,7 @@ objects:
                 --wallet-key "${WALLET_KEY}"
                 --wallet-storage-type "${WALLET_TYPE}"
                 --wallet-storage-config '{\"url\":\"${POSTGRESQL_WALLET_HOST}:${POSTGRESQL_WALLET_PORT}\",\"max_connections\":5}'
-                --wallet-storage-creds "$(eval echo \"${WALLET_STORAGE_CREDENTIALS}\")"
+                --wallet-storage-creds '{\"account\":\"${POSTGRESQL_KMS_USER}\",\"password\":\"${POSTGRESQL_KMS_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_KMS_ADMIN_USER}\",\"admin_password\":\"${POSTGRESQL_KMS_ADMIN_PASSWORD}\"}'
                 $([ ! -z "${INDY_WALLET_SEED}" ] && echo "--seed ${INDY_WALLET_SEED}" || echo "")
                 $([ ! -z "${AGENT_ADMIN_API_KEY}" ] && echo "--admin-api-key ${AGENT_ADMIN_API_KEY}" || echo "--admin-insecure-mode")
                 --label "${AGENT_NAME}"
