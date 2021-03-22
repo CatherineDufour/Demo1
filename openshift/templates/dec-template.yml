@@ -246,7 +246,7 @@ objects:
               - bash
               - -c
               - $(echo aca-py start
-                --inbound-transport http '0.0.0.0' ${AGENT_INBOUND_PORT}
+                --inbound-transport http '0.0.0.0' ${HTTP_INTERFACE_PORT}
                 $([ ! -z "${AGENT_ENDPOINT}" ] && echo "--endpoint ${AGENT_ENDPOINT}" || echo "")
                 --outbound-transport http
                 --admin 0.0.0.0 ${ADMIN_API_PORT}
