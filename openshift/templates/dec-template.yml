@@ -621,3 +621,8 @@ parameters:
     the moment.  If not defined, defaults to 'sqlite' for compatibility
   required: false
   value: postgres_storage
+- name: AGENT_ADMIN_PORT
+  displayName: Agent Admin Port
+  description: The admin port on which the service will listen.
+  required: true
+  value: "8024"
