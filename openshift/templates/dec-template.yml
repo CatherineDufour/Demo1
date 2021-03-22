@@ -308,11 +308,11 @@ objects:
                   secretKeyRef:
                     name: dec-kms
                     key: database-admin-password
-              - name: WALLET_ENCRYPTION_KEY
+              - name: MASTER_KEY
                 valueFrom:
                   secretKeyRef:
                     name: dec-kms
-                    key: encryption-key
+                    key: master-key
               - name: INDY_WALLET_SEED
                 valueFrom:
                   secretKeyRef:
