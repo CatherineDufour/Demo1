@@ -23,9 +23,9 @@ objects:
       template.openshift.io/expose-username: "{.data['database-admin-user']}"
       template.openshift.io/expose-password: "{.data['database-admin-password']}"
       template.openshift.io/expose-password: "{.data['database-name']}"
-      template.openshift.io/expose-password: "{.data['seed']}"
-      template.openshift.io/expose-password: "{.data['did']}"
-      template.openshift.io/expose-password: "{.data['encryption-key']}"
+      template.openshift.io/expose-password: "{.data['agent-did-seed']}"
+      template.openshift.io/expose-password: "{.data['agent-did']}"
+      template.openshift.io/expose-password: "{.data['master-key']}"
       template.openshift.io/expose-password: "{.data['admin-api-key']}"
   stringData:
     database-user: "dbuser"
@@ -33,9 +33,9 @@ objects:
     database-admin-user: "postgres"
     database-admin-password: "${POSTGRESQL_ADMIN_PASSWORD}"
     database-name: "${POSTGRESQL_DATABASE_NAME}"
-    seed: "${WALLET_SEED}"
-    did: "${WALLET_DID}"
-    encryption-key: "${WALLET_KEY}"
+    agent-did-seed: "${AGENT_DID_SEED}"
+    agent-did: "${AGENT_DID}"
+    master-key: "${WALLET_KEY}"
     admin-api-key: ${ADMIN_API_KEY}
 - kind: Service
   apiVersion: v1
@@ -318,11 +318,11 @@ objects:
                   secretKeyRef:
                     name: dec-kms
                     key: seed
-              - name: WALLET_DID
+              - name: AGENT_DID
                 valueFrom:
                   secretKeyRef:
                     name: dec-kms
-                    key: did
+                    key: agent-did
               - name: HTTP_INTERFACE_PORT
                 value: ${AGENT_HTTP_PORT}
               - name: ADMIN_INTERFACE_PORT
@@ -621,17 +621,16 @@ parameters:
   required: true
   generate: "expression"
   from: "[a-zA-Z0-9]{16}"
-- name: WALLET_SEED
-  displayName: Indy Wallet Seed
-  description: The Seed used for the indy wallet.
+- name: AGENT_DID_SEED
+  displayName: Agent DID seed.
+  description: Seed used to create the agent DID.
   required: true
   value: "000000000000000000000000Steward1"
-- name: WALLET_DID
-  displayName: Indy Wallet DID
-  description: The DID associated to the indy wallet.
+- name: AGENT_DID
+  displayName: Indy agent DID
+  description: The public DID associated to the agent.
   required: false
-  generate: "expression"
-  from: "[a-zA-Z0-9]{16}"
+  value: "Th7MpTaRZVRYnPiabds81Y"
 - name: ADMIN_API_KEY
   displayName: Agent Admin API Key
   description: The key used to authenticate client requests to the admin api.
