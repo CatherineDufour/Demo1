@@ -220,30 +220,7 @@ objects:
             command:
               - bash
               - -c
-              - $(echo aca-py start
-                --inbound-transport http '0.0.0.0' ${AGENT_INBOUND_PORT}
-                $([ ! -z "${AGENT_ENDPOINT}" ] && echo "--endpoint ${AGENT_ENDPOINT}" || echo "")
-                --outbound-transport http
-                --admin 0.0.0.0 ${ADMIN_API_PORT}
-                --genesis-url "${GENESIS_URL}"
-                --auto-accept-invites
-                --auto-accept-requests
-                --auto-ping-connection
-                --auto-respond-messages
-                --auto-respond-credential-offer
-                --auto-verify-presentation
-                --wallet-type 'indy'
-                --wallet-name "$(echo ${AGENT_WALLET_NAME} | tr '[:upper:]' '[:lower:]' | sed "s~-~_~g")"
-                --wallet-key "${WALLET_KEY}"
-                --wallet-storage-type "${WALLET_TYPE}"
-                --wallet-storage-config "$(eval echo \"${WALLET_STORAGE_CONFIGURATION}\")"
-                --wallet-storage-creds "$(eval echo \"${WALLET_STORAGE_CREDENTIALS}\")"
-                $([ ! -z "${INDY_WALLET_SEED}" ] && echo "--seed ${INDY_WALLET_SEED}" || echo "")
-                $([ ! -z "${AGENT_ADMIN_API_KEY}" ] && echo "--admin-api-key ${AGENT_ADMIN_API_KEY}" || echo "--admin-insecure-mode")
-                --label "${AGENT_NAME}"
-                --log-level ${AGENT_LOG_LEVEL}
-                $([ ! -z "${TIMING}" ] && echo "--timing" || echo "")
-                $([ ! -z "${READ_ONLY_LEDGER}" ] && echo "--read-only-ledger" || echo ""));
+              - $(echo aca-py -v);
             env:
               - name: GENESIS_URL
                 value: ${GENESIS_FILE_URL}
