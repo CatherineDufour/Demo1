@@ -230,6 +230,7 @@ objects:
       contextDir: DEC-agent
       type: Git
       git:
+        ref: 'deploy-parameters'
         uri: 'https://github.com/CQEN-QDCE/Demo1.git'
     triggers:
       - github:
@@ -380,6 +381,7 @@ objects:
     source:
       contextDir: DEC-controller
       git:
+        ref: 'deploy-parameters'
         uri: https://github.com/CQEN-QDCE/Demo1.git
       type: Git
     strategy:
