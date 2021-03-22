@@ -175,56 +175,7 @@ objects:
     strategy:
       type: Docker
       dockerStrategy:
-        noCache: true
-        env:
-          - name: POSTGRESQL_KMS_USER
-            valueFrom:
-              secretKeyRef:
-                name: dec-kms
-                key: database-user
-          - name: POSTGRESQL_KMS_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: dec-kms
-                key: database-password
-          - name: POSTGRESQL_KMS_ADMIN_USER
-            valueFrom:
-              secretKeyRef:
-                name: dec-kms
-                key: database-admin-user
-          - name: POSTGRESQL_KMS_ADMIN_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: dec-kms
-                key: database-admin-password
-        forcePull: true
         dockerfilePath: Dockerfile
-        buildArgs:
-        #This is an example that we used on our demo vonx blockchain
-        #Seed: 000000000000DirecteurEtatCivilQc
-        #DID: Ep31SvFAetugFPe5CGzJxt
-        #Verkey: 8XbHSBZu5LpTUmDuvmLtfxUNjKzk4Dpm7u6wX2DuPLMj
-        #Alias: DEC
-        - name: ISSUER_SEED
-          value: 000000000000DirecteurEtatCivilQc
-        - name: ISSUER_AGENT_ENDPOINT
-          value: 'http://dec-agent.apps.exp.lab.pocquebec.org'
-        - name: ISSUER_KMS_KEY
-          value: Issuer1kms
-        - name: ISSUER_ADMIN_API_KEY
-          value: secret
-        - name: ISSUER_HOSTNAME
-          value: 'http://dec-agent.apps.exp.lab.pocquebec.org'
-        - name: GENESIS_URL
-          value: 'http://vonx.pocquebec.org:9000/genesis'
-        - name: INBOUND_PORT
-          value: '8000'
-        - name: API_PORT
-          value: '3000'
-        - name: ISSUER_POSTGRESQL_KMS_HOST
-          value: dec-kms
-        - name: ISSUER_POSTGRESQL_KMS_PORT
-          value: '5432'
     postCommit: {}
     source:
       contextDir: DEC-agent
@@ -257,6 +208,139 @@ objects:
         maxSurge: 25%
       resources: {}
       activeDeadlineSeconds: 21600
+    template:
+      metadata:
+        name: dec-agent
+        labels:
+          app: dec-agent
+          app.kubernetes.io/part-of: DEC
+      spec:
+        containers:
+          - name: dec-agent
+            command:
+              - bash
+              - -c
+              - $(echo aca-py start
+                --inbound-transport http '0.0.0.0' ${AGENT_INBOUND_PORT}
+                $([ ! -z "${AGENT_ENDPOINT}" ] && echo "--endpoint ${AGENT_ENDPOINT}" || echo "")
+                --outbound-transport http
+                --admin 0.0.0.0 ${ADMIN_API_PORT}
+                --genesis-url "${GENESIS_URL}"
+                --auto-accept-invites
+                --auto-accept-requests
+                --auto-ping-connection
+                --auto-respond-messages
+                --auto-respond-credential-offer
+                --auto-verify-presentation
+                --wallet-type 'indy'
+                --wallet-name "$(echo ${AGENT_WALLET_NAME} | tr '[:upper:]' '[:lower:]' | sed "s~-~_~g")"
+                --wallet-key "${WALLET_KEY}"
+                --wallet-storage-type "${WALLET_TYPE}"
+                --wallet-storage-config '{\"url\":\"'\"$POSTGRESQL_WALLET_HOST\"':'\"$POSTGRESQL_WALLET_PORT\"'\",\"max_connections\":5}' \
+                --wallet-storage-creds '{\"account\":\"'\"$POSTGRESQL_KMS_USER\"'\",\"password\":\"'\"$POSTGRESQL_KMS_PASSWORD\"'\",\"admin_account\":\"'\"$POSTGRESQL_KMS_ADMIN_USER\"'\",\"admin_password\":\"'\"$POSTGRESQL_KMS_ADMIN_PASSWORD\"'\"}' \
+                $([ ! -z "${INDY_WALLET_SEED}" ] && echo "--seed ${INDY_WALLET_SEED}" || echo "")
+                $([ ! -z "${AGENT_ADMIN_API_KEY}" ] && echo "--admin-api-key ${AGENT_ADMIN_API_KEY}" || echo "--admin-insecure-mode")
+                --label "${AGENT_NAME}"
+                --log-level ${AGENT_LOG_LEVEL}
+                $([ ! -z "${TIMING}" ] && echo "--timing" || echo "")
+                $([ ! -z "${READ_ONLY_LEDGER}" ] && echo "--read-only-ledger" || echo ""));
+            env:
+              - name: GENESIS_URL
+                value: ${GENESIS_FILE_URL}
+              - name: AGENT_WALLET_NAME
+                value: dec-agent-wallet
+              - name: POSTGRESQL_WALLET_HOST
+                value: ${WALLET_HOST}
+              - name: POSTGRESQL_WALLET_PORT
+                value: ${WALLET_HOST_PORT}
+              - name: WALLET_STORAGE_CONFIGURATION
+                value: ${WALLET_STORAGE_CONFIG}
+              - name: WALLET_STORAGE_CREDENTIALS
+                value: ${WALLET_STORAGE_CREDS}
+              - name: POSTGRESQL_KMS_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: dec-kms
+                    key: database-user
+              - name: POSTGRESQL_KMS_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: dec-kms
+                    key: database-password
+              - name: POSTGRESQL_KMS_ADMIN_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: dec-kms
+                    key: database-admin-user
+              - name: POSTGRESQL_KMS_ADMIN_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: dec-kms
+                    key: database-admin-password
+              - name: WALLET_ENCRYPTION_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: ${PREFIX}${WALLET_CREDENTIAL_STORE_NAME}
+                    key: key
+              - name: INDY_WALLET_SEED
+                valueFrom:
+                  secretKeyRef:
+                    name: ${PREFIX}${WALLET_CREDENTIAL_STORE_NAME}
+                    key: seed
+              - name: WALLET_DID
+                valueFrom:
+                  secretKeyRef:
+                    name: ${PREFIX}${WALLET_CREDENTIAL_STORE_NAME}
+                    key: did
+              - name: HTTP_INTERFACE_PORT
+                value: ${AGENT_HTTP_PORT}
+              - name: ADMIN_INTERFACE_PORT
+                value: ${AGENT_ADMIN_PORT}
+              - name: AGENT_ADMIN_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: ${PREFIX}${NAME}
+                    key: admin-api-key
+              - name: AGENT_NAME
+                value: ${AGENT_LABEL_NAME}
+              - name: AGENT_ENDPOINT
+                value: 'Replace with agent route location'
+              - name: AGENT_LOG_LEVEL
+                value: ${LOG_LEVEL}
+              - name: TIMING
+                value: ${AGENT_TIMING}
+              - name: READ_ONLY_LEDGER
+                value: ${AGENT_READ_ONLY_LEDGER}
+            image:
+            ports:
+              - containerPort: ${{AGENT_ADMIN_PORT}}
+                protocol: TCP
+              - containerPort: ${{AGENT_HTTP_PORT}}
+                protocol: TCP
+            readinessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 3
+              exec:
+                command:
+                  - bash
+                  - "-c"
+                  - 'curl --fail "http://localhost:${ADMIN_INTERFACE_PORT}/status/ready" -H "X-API-KEY: ${AGENT_ADMIN_API_KEY}"'
+            livenessProbe:
+              timeoutSeconds: 30
+              initialDelaySeconds: 300
+              exec:
+                command:
+                  - bash
+                  - "-c"
+                  - 'curl --fail "http://localhost:${ADMIN_INTERFACE_PORT}/status/live" -H "X-API-KEY: ${AGENT_ADMIN_API_KEY}"'
+            imagePullPolicy: IfNotPresent
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
     triggers:
       - github:
           secretReference:
@@ -508,3 +592,23 @@ parameters:
   description: Name of the PostgreSQL database.
   required: true
   value: "kms"
+- name: GENESIS_FILE_URL
+  displayName: Genesis File URL
+  description: The URL from which the genesis file can be downloaded.
+  required: true
+  value: http://vonx.pocquebec.org:9000/genesis
+- name: LOG_LEVEL
+  displayName: Log Level
+  description: The logging level for the agent.
+  required: true
+  value: DEBUG
+- name: WALLET_HOST
+  displayName: PostgreSql Wallet Hostname
+  required: true
+  description: Hostname of the deployed database hosting the wallet.  Only used when WALLET_STORAGE_TYPE = postgres_storage.
+  value: dec-kms
+- name: WALLET_HOST_PORT
+  displayName: PostgreSql Wallet Port
+  required: true
+  description: The port number of the deployed database hosting the wallet.  Only used when WALLET_STORAGE_TYPE = postgres_storage.
+  value: "5432"
