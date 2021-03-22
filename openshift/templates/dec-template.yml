@@ -236,8 +236,8 @@ objects:
                 --wallet-name "$(echo ${AGENT_WALLET_NAME} | tr '[:upper:]' '[:lower:]' | sed "s~-~_~g")"
                 --wallet-key "${WALLET_KEY}"
                 --wallet-storage-type "${WALLET_TYPE}"
-                --wallet-storage-config '{\"url\":\"'\"$POSTGRESQL_WALLET_HOST\"':'\"$POSTGRESQL_WALLET_PORT\"'\",\"max_connections\":5}' \
-                --wallet-storage-creds '{\"account\":\"'\"$POSTGRESQL_KMS_USER\"'\",\"password\":\"'\"$POSTGRESQL_KMS_PASSWORD\"'\",\"admin_account\":\"'\"$POSTGRESQL_KMS_ADMIN_USER\"'\",\"admin_password\":\"'\"$POSTGRESQL_KMS_ADMIN_PASSWORD\"'\"}' \
+                --wallet-storage-config "$(eval echo \"${WALLET_STORAGE_CONFIGURATION}\")"
+                --wallet-storage-creds "$(eval echo \"${WALLET_STORAGE_CREDENTIALS}\")"
                 $([ ! -z "${INDY_WALLET_SEED}" ] && echo "--seed ${INDY_WALLET_SEED}" || echo "")
                 $([ ! -z "${AGENT_ADMIN_API_KEY}" ] && echo "--admin-api-key ${AGENT_ADMIN_API_KEY}" || echo "--admin-insecure-mode")
                 --label "${AGENT_NAME}"
@@ -249,6 +249,8 @@ objects:
                 value: ${GENESIS_FILE_URL}
               - name: AGENT_WALLET_NAME
                 value: dec-agent-wallet
+              - name: WALLET_TYPE
+                value: ${WALLET_STORAGE_TYPE}
               - name: POSTGRESQL_WALLET_HOST
                 value: ${WALLET_HOST}
               - name: POSTGRESQL_WALLET_PORT
@@ -612,3 +614,10 @@ parameters:
   required: true
   description: The port number of the deployed database hosting the wallet.  Only used when WALLET_STORAGE_TYPE = postgres_storage.
   value: "5432"
+- name: WALLET_STORAGE_TYPE
+  displayName: Wallet Storage Type
+  description:
+    The wallet storage type.  Your choice of 'postgres' or 'sqlite' at
+    the moment.  If not defined, defaults to 'sqlite' for compatibility
+  required: false
+  value: postgres_storage
