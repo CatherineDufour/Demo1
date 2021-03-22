@@ -23,12 +23,18 @@ objects:
       template.openshift.io/expose-username: "{.data['database-admin-user']}"
       template.openshift.io/expose-password: "{.data['database-admin-password']}"
       template.openshift.io/expose-password: "{.data['database-name']}"
+      template.openshift.io/expose-password: "{.data['seed']}"
+      template.openshift.io/expose-password: "{.data['did']}"
+      template.openshift.io/expose-password: "{.data['encryption-key']}"
   stringData:
     database-user: "dbuser"
     database-password: "${POSTGRESQL_PASSWORD}"
     database-admin-user: "postgres"
     database-admin-password: "${POSTGRESQL_ADMIN_PASSWORD}"
     database-name: "${POSTGRESQL_DATABASE_NAME}"
+    seed: "${WALLET_SEED}"
+    did: "${WALLET_DID}"
+    encryption-key: "${WALLET_KEY}"
 - kind: Service
   apiVersion: v1
   metadata:
@@ -299,17 +305,17 @@ objects:
               - name: WALLET_ENCRYPTION_KEY
                 valueFrom:
                   secretKeyRef:
-                    name: ${PREFIX}${WALLET_CREDENTIAL_STORE_NAME}
-                    key: key
+                    name: dec-kms
+                    key: encryption-key
               - name: INDY_WALLET_SEED
                 valueFrom:
                   secretKeyRef:
-                    name: ${PREFIX}${WALLET_CREDENTIAL_STORE_NAME}
+                    name: dec-kms
                     key: seed
               - name: WALLET_DID
                 valueFrom:
                   secretKeyRef:
-                    name: ${PREFIX}${WALLET_CREDENTIAL_STORE_NAME}
+                    name: dec-kms
                     key: did
               - name: HTTP_INTERFACE_PORT
                 value: ${AGENT_HTTP_PORT}
@@ -603,3 +609,21 @@ parameters:
   description: The admin port on which the service will listen.
   required: true
   value: "8024"
+- name: WALLET_KEY
+  displayName: Wallet Encryption Key
+  description: The encryption key to be used for the wallets.
+  required: true
+  generate: "expression"
+  from: "[a-zA-Z0-9]{16}"
+- name: WALLET_SEED
+  displayName: Indy Wallet Seed
+  description: The Seed used for the indy wallet.
+  required: true
+  generate: "expression"
+  from: "[a-zA-Z0-9]{16}"
+- name: WALLET_DID
+  displayName: Indy Wallet DID
+  description: The DID associated to the indy wallet.
+  required: false
+  generate: "expression"
+  from: "[a-zA-Z0-9]{16}"
