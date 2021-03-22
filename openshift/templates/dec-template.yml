@@ -625,8 +625,7 @@ parameters:
   displayName: Indy Wallet Seed
   description: The Seed used for the indy wallet.
   required: true
-  generate: "expression"
-  from: "[a-zA-Z0-9]{16}"
+  value: "000000000000000000000000Steward1"
 - name: WALLET_DID
   displayName: Indy Wallet DID
   description: The DID associated to the indy wallet.
@@ -637,8 +636,7 @@ parameters:
   displayName: Agent Admin API Key
   description: The key used to authenticate client requests to the admin api.
   required: true
-  generate: "expression"
-  from: "[a-zA-Z0-9]{16}"
+  value: "XpHQgyg7Dd4WerGtGCL3KN"
 - name: WALLET_STORAGE_CONFIG
   displayName: Wallet Storage Configuration
   required: true
@@ -649,3 +647,13 @@ parameters:
   required: true
   description: Wallet storage credential configuration
   value: '{\"account\":\"${POSTGRESQL_KMS_USER}\",\"password\":\"${POSTGRESQL_KMS_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_KMS_ADMIN_USER}\",\"admin_password\":\"${POSTGRESQL_KMS_ADMIN_PASSWORD}\"}'
+- name: AGENT_TIMING
+  displayName: Collect agent timing information.
+  description: Enable/Disable collection of agent timing information.  Controls the inclusion/exclusion of the agent '--timing' startup parameter.  Defaults to disabled.
+  required: false
+  value: ""
+- name: AGENT_READ_ONLY_LEDGER
+  displayName: Set read only ledger flag.
+  description: Enable/Disable the read only ledger flag.  Controls the inclusion/exclusion of the agent '--read-only-ledger' startup parameter.  Defaults to disabled.
+  required: false
+  value: ''
