@@ -26,6 +26,7 @@ objects:
       template.openshift.io/expose-password: "{.data['seed']}"
       template.openshift.io/expose-password: "{.data['did']}"
       template.openshift.io/expose-password: "{.data['encryption-key']}"
+      template.openshift.io/expose-password: "{.data['admin-api-key']}"
   stringData:
     database-user: "dbuser"
     database-password: "${POSTGRESQL_PASSWORD}"
@@ -35,6 +36,7 @@ objects:
     seed: "${WALLET_SEED}"
     did: "${WALLET_DID}"
     encryption-key: "${WALLET_KEY}"
+    admin-api-key: ${ADMIN_API_KEY}
 - kind: Service
   apiVersion: v1
   metadata:
@@ -324,7 +326,7 @@ objects:
               - name: AGENT_ADMIN_API_KEY
                 valueFrom:
                   secretKeyRef:
-                    name: ${PREFIX}${NAME}
+                    name: dec-kms
                     key: admin-api-key
               - name: AGENT_NAME
                 value: ${AGENT_LABEL_NAME}
@@ -625,5 +627,11 @@ parameters:
   displayName: Indy Wallet DID
   description: The DID associated to the indy wallet.
   required: false
+  generate: "expression"
+  from: "[a-zA-Z0-9]{16}"
+- name: ADMIN_API_KEY
+  displayName: Agent Admin API Key
+  description: The key used to authenticate client requests to the admin api.
+  required: true
   generate: "expression"
   from: "[a-zA-Z0-9]{16}"
