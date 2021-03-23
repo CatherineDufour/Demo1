@@ -59,7 +59,7 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 ![Contexte d'alice](images/Contexte1.png)
 
 <p align="center">
-  <img src="images/Contexte1.png" />
+  <img src="/images/Contexte1.png" />
   <br>
   <b>Contexte de l'histoire d'Alice</b>
 </p>
