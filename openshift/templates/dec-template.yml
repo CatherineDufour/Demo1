@@ -279,7 +279,7 @@ objects:
               - name: POSTGRESQL_KMS_HOST
                 value: ${WALLET_HOST}
               - name: POSTGRESQL_KMS_PORT
-                value: ${WALLET_HOST_PORT}
+                value: ${POSTGRESQL_KMS_PORT}
               - name: WALLET_STORAGE_CONFIGURATION
                 value: ${WALLET_STORAGE_CONFIG}
               - name: WALLET_STORAGE_CREDENTIALS
@@ -598,7 +598,7 @@ parameters:
   required: true
   description: Hostname of the deployed database hosting the wallet.  Only used when WALLET_STORAGE_TYPE = postgres_storage.
   value: dec-kms
-- name: WALLET_HOST_PORT
+- name: POSTGRESQL_KMS_PORT
   displayName: PostgreSql Wallet Port
   required: true
   description: The port number of the deployed database hosting the wallet.  Only used when WALLET_STORAGE_TYPE = postgres_storage.
