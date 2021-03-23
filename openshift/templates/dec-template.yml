@@ -33,8 +33,8 @@ objects:
     database-admin-user: "postgres"
     database-admin-password: "${POSTGRESQL_ADMIN_PASSWORD}"
     database-name: "${POSTGRESQL_DATABASE_NAME}"
-    agent-did-seed: "${AGENT_DID_SEED2}"
-    agent-did: "${AGENT_DID2}"
+    agent-did-seed: "${AGENT_DID_SEED}"
+    agent-did: "${AGENT_DID}"
     master-key: "${WALLET_KEY}"
     admin-api-key: ${ADMIN_API_KEY}
 - kind: Service
@@ -619,12 +619,12 @@ parameters:
   required: true
   generate: "expression"
   from: "[a-zA-Z0-9]{16}"
-- name: AGENT_DID_SEED2
+- name: AGENT_DID_SEED
   displayName: Agent DID seed.
   description: Seed used to create the agent DID.
   required: true
   value: "000000000000DirecteurEtatCivilQc"
-- name: AGENT_DID2
+- name: AGENT_DID
   displayName: Indy agent DID
   description: The public DID associated to the agent.
   required: false
