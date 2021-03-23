@@ -276,14 +276,14 @@ objects:
                 value: dec-agent-wallet
               - name: WALLET_TYPE
                 value: ${WALLET_STORAGE_TYPE}
-              - name: POSTGRESQL_WALLET_HOST
+              - name: POSTGRESQL_KMS_HOST
                 value: ${WALLET_HOST}
+              - name: POSTGRESQL_KMS_PORT
+                value: ${WALLET_HOST_PORT}
               - name: WALLET_STORAGE_CONFIGURATION
                 value: ${WALLET_STORAGE_CONFIG}
               - name: WALLET_STORAGE_CREDENTIALS
                 value: ${WALLET_STORAGE_CREDS}
-              - name: POSTGRESQL_WALLET_PORT
-                value: ${WALLET_HOST_PORT}
               - name: WALLET_STORAGE_CONFIGURATION
                 value: ${WALLET_STORAGE_CONFIG}
               - name: WALLET_STORAGE_CREDENTIALS
@@ -638,7 +638,7 @@ parameters:
   displayName: Wallet Storage Configuration
   required: true
   description: Wallet storage configuration
-  value: '{\"url\":\"${POSTGRESQL_WALLET_HOST}:${POSTGRESQL_WALLET_PORT}\",\"max_connections\":5}'
+  value: '{\"url\":\"${POSTGRESQL_KMS_HOST}:${POSTGRESQL_KMS_PORT}\",\"max_connections\":5}'
 - name: WALLET_STORAGE_CREDS
   displayName: Wallet Storage Credential Configuration
   required: true
