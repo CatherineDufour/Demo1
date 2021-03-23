@@ -56,10 +56,20 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 > faire, la mère d\'Alice fait une demande au Guichet unique d\'accès aux
 > places en service de garde._
 
-![Contexte d'alice](/images/Contexte1.png)
-
 <p align="center">
-  <img src="/images/Contexte1.png" />
+
+  Un <img src="/images/Contexte1.png" />
+
+  Deux <img src="images/Contexte1.png" />
+
+  Trois <img src="/Images/Contexte1.png" />
+
+  Quatre <img src="Images/Contexte1.png" />
+
+  Cinq <img src="./Images/Contexte1.png" />
+
+  Six <img src="./images/Contexte1.png" />
+
   <br>
   <b>Contexte de l'histoire d'Alice</b>
 </p>
