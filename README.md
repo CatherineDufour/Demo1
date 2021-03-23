@@ -4,34 +4,34 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
 ## Table des matières
 
-1. [Objectifs](#1.0-Objectifs)
+1. [Objectifs](#10-Objectifs)
 
-2. [Contexte](#2.0-Contexte)
+2. [Contexte](#20-Contexte)
 
-3. [Environnement d\'expérimentation](#3.0-Environnement-d'expérimentation)
+3. [Environnement d\'expérimentation](#30-Environnement-d'expérimentation)
 
-   1. [Conditions initiales et prémisses](#3.1-conditions-initiales-et-prémisses)
+   1. [Conditions initiales et prémisses](#31-conditions-initiales-et-prémisses)
 
-4. [Démarche](#4.0-démarche)
+4. [Démarche](#40-démarche)
 
-5. [Attestation d\'identité numérique](#5.0-Attestation-d'identité-numérique)
+5. [Attestation d\'identité numérique](#50-Attestation-d'identité-numérique)
 
-6. [Résultats attendus](#6.0-résultats-attendus)
+6. [Résultats attendus](#60-résultats-attendus)
 
-7. [Analyse](#7.0-analyse)
+7. [Analyse](#70-analyse)
 
-   1. [Échanges avec le BC](#7.1-Échanges-avec-le-BC)
-   2. [Expérimentations](#7.2-Expérimentations)
-   3. [Personne autonome](#7.3-Personne-autonome)
-      1. [Le détenteur](#7.3.1-Le-détenteur)
-   4. [Autorité parentale](#7.4-Autorité-parentale)
-      1. [Le détenteur parental](#7.4.1-Le-détenteur-parental)
-      2. [Le sujet](#7.4.2-Le-sujet)
-      3. [L\'échéance](#7.4.3-L'échéance)
-      4. [Le statut de révocation](#7.4.4-Le-statut-de-révocation)
-   5. [Attestations et transactions](#7.5-Attestations-et-transactions)
+   1. [Échanges avec le BC](#71-Échanges-avec-le-BC)
+   2. [Expérimentations](#72-Expérimentations)
+   3. [Personne autonome](#73-Personne-autonome)
+      1. [Le détenteur](#731-Le-détenteur)
+   4. [Autorité parentale](#74-Autorité-parentale)
+      1. [Le détenteur parental](#741-Le-détenteur-parental)
+      2. [Le sujet](#742-Le-sujet)
+      3. [L\'échéance](#743-L'échéance)
+      4. [Le statut de révocation](#744-Le-statut-de-révocation)
+   5. [Attestations et transactions](#75-Attestations-et-transactions)
 
-8. [Conclusion](#8.0-Conclusion)
+8. [Conclusion](#80-Conclusion)
 
 ---
 
