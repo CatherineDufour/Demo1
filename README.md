@@ -129,9 +129,11 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 - Le DEC connait la relation entre la mère et l\'enfant: elle est dans ses registres internes.
 
 <p align="center">
-  Un <img src="images/EnvironnementTest.png" label="Environnement de test">
+  Un <img src="Images/EnvironnementTest.png" label="Environnement de test">
  
-  Deux <img src="images/EnvironnementTest.png" label="Environnement de test" />
+  Deux <img src="Images/EnvironnementTest.png" label="Environnement de test" />
+
+  Deux <img src="Images/EnvironnementTest.png" />
 
   <br>
   <b>Shéma des composants utilisés pour réaliser l'expérimentation</b>
