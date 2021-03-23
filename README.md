@@ -57,18 +57,7 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 > places en service de garde._
 
 <p align="center">
-
-  Un <img src="/images/Contexte1.png" />
-
-  Deux <img src="images/Contexte1.png" />
-
-  Trois <img src="/Images/Contexte1.png" />
-
-  Quatre <img src="Images/Contexte1.png" />
-
-  Cinq <img src="./Images/Contexte1.png" />
-
-  Six <img src="./images/Contexte1.png" />
+  <img src="Images/Contexte1.png" label="Contexte d'Alice" />
 
   <br>
   <b>Contexte de l'histoire d'Alice</b>
@@ -129,9 +118,7 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 - Le DEC connait la relation entre la mère et l\'enfant: elle est dans ses registres internes.
 
 <p align="center">
-  Un <img src="images/EnvironnementTest.png" label="Environnement de test">
- 
-  Deux <img src="images/EnvironnementTest.png" label="Environnement de test" />
+  <img src="Images/EnvironnementTest.png" label="Environnement de test" />
 
   <br>
   <b>Shéma des composants utilisés pour réaliser l'expérimentation</b>
@@ -140,13 +127,15 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 # 4.0 Démarche
 
 <p align="center">
-  <img src="images/Démarche1.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur">
+  <img src="Images/Démarche1.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
+
   <br>
   <b>Diagramme de séquence - Émission d'attestation</b>
 </p>
 
 <p align="center">
-  <img src="images/Démarche2.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur">
+  <img src="Images/Démarche2.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
+
   <br>
   <b>Diagramme de séquence - Vérification d'attestation</b>
 </p>
@@ -459,7 +448,8 @@ et les performances des infrastructures. Le diagramme de séquence de
 l\'expérimentation devrait donc être le suivant :
 
 <p align="center">
-  <img src="images/AttestationTransaction1.png" label="Émission d'une attestation d'on le sujet n'est pas le détenteur">
+  <img src="Images/AttestationTransaction1.png" label="Émission d'une attestation d'on le sujet n'est pas le détenteur" />
+  
   <br>
   <b>Diagramme de séquence de l'expérimentation</b>
 </p>
