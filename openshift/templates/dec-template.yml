@@ -263,9 +263,9 @@ objects:
                 --wallet-storage-type "${WALLET_TYPE}"
                 --wallet-storage-config "$(eval echo \"${WALLET_STORAGE_CONFIGURATION}\")"
                 --wallet-storage-creds "$(eval echo \"${WALLET_STORAGE_CREDENTIALS}\")"
-                $([ ! -z "${INDY_WALLET_SEED}" ] && echo "--seed ${INDY_WALLET_SEED}" || echo "")
+                $([ ! -z "${AGENT_DID_SEED}" ] && echo "--seed ${AGENT_DID_SEED}" || echo "")
                 $([ ! -z "${AGENT_ADMIN_API_KEY}" ] && echo "--admin-api-key ${AGENT_ADMIN_API_KEY}" || echo "--admin-insecure-mode")
-                --label "${AGENT_NAME}"
+                --label 'Directeur'
                 --log-level ${AGENT_LOG_LEVEL}
                 $([ ! -z "${TIMING}" ] && echo "--timing" || echo "")
                 $([ ! -z "${READ_ONLY_LEDGER}" ] && echo "--read-only-ledger" || echo ""));
@@ -313,11 +313,11 @@ objects:
                   secretKeyRef:
                     name: dec-kms
                     key: master-key
-              - name: INDY_WALLET_SEED
+              - name: AGENT_DID_SEED
                 valueFrom:
                   secretKeyRef:
                     name: dec-kms
-                    key: seed
+                    key: agent-did-seed
               - name: AGENT_DID
                 valueFrom:
                   secretKeyRef:
@@ -658,7 +658,7 @@ parameters:
   displayName: Agent Label/Name
   description: The label/name of the agent.
   required: true
-  value: 'Directeur État Civil'
+  value: "Directeur État Civil"
 - name: AGENT_HTTP_PORT
   displayName: Agent Http Port
   description: The http port on which the service will listen.
