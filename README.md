@@ -57,7 +57,7 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 > places en service de garde._
 
 <p align="center">
-  <img src="images/Contexte1.png" label="Contexte d\'Alice" />
+  <img src="images/Contexte1.png" label="Contexte d'Alice" />
   <br>
   <b>Contexte de l'histoire d'Alice</b>
 </p>
