@@ -57,12 +57,12 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 > places en service de garde._
 
 <p align="center">
-  <img src="images/Contexte1.png" label="Contexte d\'Alice">
+  <img src="./images/Contexte1.png" label="Contexte d\'Alice">
   <br>
   <b>Contexte de l'histoire d'Alice</b>
 </p>
 
-1.  Le DEC consigne la naissance d\'Alice dans ses systèmes;
+1.  Le DEC consigne la naissance d'Alice dans ses systèmes;
 
 2.  Le DEC notifie les parents d\'Alice qu\'ils peuvent faire la demande
     de l\'attestation numérique d\'identité;
