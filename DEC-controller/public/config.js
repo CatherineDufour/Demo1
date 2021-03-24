@@ -1,0 +1,4 @@
+window.REACT_APP_SCHEMA_NAME_IDENTITE = undefined;
+window.REACT_APP_SCHEMA_VERSION_IDENTITE = undefined;
+window.REACT_APP_SCHEMA_ISSUER_DID_IDENTITE = undefined;
+window.REACT_APP_CRED_DEF_IDENTITE = undefined;

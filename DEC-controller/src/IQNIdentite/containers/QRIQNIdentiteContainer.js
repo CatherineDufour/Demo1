@@ -19,10 +19,10 @@ function QRIQNIdentiteContainer(props) {
 	let INTERVAL = 5000; 
 	let TIMEOUT  = 3000;
 	// Variables d'identitfication du schema
-	const schemaName                       = process.env.REACT_APP_SCHEMA_NAME_IDENTITE; 
-	const schemaIssuerDID                  = process.env.REACT_APP_SCHEMA_ISSUER_DID_IDENTITE; 
-	const schemaVersion                    = process.env.REACT_APP_SCHEMA_VERSION_IDENTITE;
-	const schemaCredDef                    = process.env.REACT_APP_CRED_DEF_IDENTITE;
+	const schemaName                       = window.REACT_APP_SCHEMA_NAME_IDENTITE ? window.REACT_APP_SCHEMA_NAME_IDENTITE : process.env.REACT_APP_SCHEMA_NAME_IDENTITE; 
+	const schemaIssuerDID                  = window.REACT_APP_SCHEMA_ISSUER_DID_IDENTITE? window.REACT_APP_SCHEMA_ISSUER_DID_IDENTITE : process.env.REACT_APP_SCHEMA_ISSUER_DID_IDENTITE; 
+	const schemaVersion                    = window.REACT_APP_SCHEMA_VERSION_IDENTITE? window.REACT_APP_SCHEMA_VERSION_IDENTITE : process.env.REACT_APP_SCHEMA_VERSION_IDENTITE; 
+	const schemaCredDef                    = window.REACT_APP_CRED_DEF_IDENTITE? window.REACT_APP_CRED_DEF_IDENTITE : process.env.REACT_APP_CRED_DEF_IDENTITE; 
 
 	const [modal, setModal]                = useState(false);
 	const [show, setShow]                  = useState(false);

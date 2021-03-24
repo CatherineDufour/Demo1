@@ -425,6 +425,14 @@ objects:
         routerCanonicalHostname: apps.exp.lab.pocquebec.org
 
 #DEC-controller
+- kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: dec-controller
+  data:
+    environment.js: |
+      window.FAVOURITE_SONG = "The Locomotion"
+      window.FAVOURITE_ERA = "Mid-90s Nick Cave Kylie"
 - kind: ImageStream
   apiVersion: v1
   metadata:

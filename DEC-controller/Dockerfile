@@ -5,6 +5,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY --chown=1000 package.json ./
 RUN npm install
 RUN npm install react-scripts@3.4.1 -g
+RUN npm install serve -g 
 COPY --chown=1000 . ./
 RUN npm run build
 
@@ -12,4 +13,4 @@ RUN npm run build
 EXPOSE 10000
 
 # start app
-CMD ["npm", "start"]
+CMD ["./docker-start.sh"]

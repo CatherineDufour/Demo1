@@ -9,7 +9,7 @@
 ##############################################################
 ### Définition des variables globales
 
-@hostname = http://dec-agent-admin2.apps.exp.lab.pocquebec.org
+@hostname = http://dec-agent-admin.apps.exp.lab.pocquebec.org
 
 ####
 #### Get list de connections 
