@@ -9,6 +9,7 @@ RUN npm install serve -g
 COPY --chown=1000 . ./
 RUN npm run build
 RUN chgrp -R 0 /app && chmod -R g=u /app 
+RUN chgrp -R 0 ./ && chmod -R g=u ./ 
 
 # Expose ports
 EXPOSE 10000
