@@ -13,4 +13,4 @@ RUN npm run build
 EXPOSE 10000
 
 # start app
-CMD ["./docker-start.sh"]
+CMD ["chmod", "+x", "./docker-start.sh"]
