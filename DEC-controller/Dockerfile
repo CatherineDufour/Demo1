@@ -8,7 +8,8 @@ RUN npm install react-scripts@3.4.1 -g
 RUN npm install serve -g 
 COPY --chown=1000 . ./
 RUN npm run build
-RUN chgrp -R 1000 and chmod -R g+rw
+RUN chgrp -R 1000
+RUN chmod -R g+rw
 # Expose ports
 EXPOSE 10000
 
