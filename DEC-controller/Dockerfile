@@ -11,7 +11,5 @@ RUN npm run build
 COPY env2js.sh /opt/app-root/src/
 COPY docker-start.sh /opt/app-root/src/
 COPY server.js /opt/app-root/src/
-RUN chmod +x /opt/app-root/src/docker-start.sh
-RUN chmod +x /opt/app-root/src/env2js.sh
 EXPOSE 10000
-CMD ["./docker-start.sh"]
+CMD ["sh", "./docker-start.sh"]
