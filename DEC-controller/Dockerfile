@@ -8,8 +8,8 @@ RUN npm install react-scripts@3.4.1 -g
 RUN npm install serve -g 
 COPY --chown=1000 . ./
 RUN npm run build
-RUN chown -R 1000:1000 build/config.js
-RUN chmod 755 build/config.js
+COPY --chown=1000 public/config.js build/config.js
+
 # Expose ports
 EXPOSE 10000
 
