@@ -1,15 +1,17 @@
 FROM registry.redhat.io/ubi8/nodejs-12 as builder
 USER 1000
-WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
-COPY --chown=1000 package.json ./
+WORKDIR /opt/app-root/src
+ENV PATH /opt/app-root/src/node_modules/.bin:$PATH
+COPY package.json /opt/app-root/src
 RUN npm install
 RUN npm install react-scripts@3.4.1 -g
-COPY --chown=1000 . ./
+COPY public /opt/app-root/src/public/
+COPY src /opt/app-root/src/src/
 RUN npm run build
-
-# Expose ports
+COPY env2js.sh /opt/app-root/src/
+COPY docker-start.sh /opt/app-root/src/
+COPY server.js /opt/app-root/src/
+RUN chmod +x /opt/app-root/src/docker-start.sh
+RUN chmod +x /opt/app-root/src/env2js.sh
 EXPOSE 10000
-
-# start app
-CMD ["npm", "start"]
+CMD ["./docker-start.sh"]
