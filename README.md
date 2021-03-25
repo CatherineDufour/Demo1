@@ -79,7 +79,7 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 
 7.  Le DEC émet l\'attestation numérique d\'identité d\'Alice à la mère;
 
-8.  Le DEC consigne l\'émission dans le registre distribué.
+8.  Le DEC consigne l\'émission dans le dépôt de clé sécurisé de son agent.
 
 9.  La mère fait une demande pour bénéficier d\'une place dans un CPE
     auprès du guichet unique d\'accès aux places en service de garde;
