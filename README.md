@@ -14,7 +14,7 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
 4. [Démarche](#40-démarche)
 
-5. [Attestation d\'identité numérique](#50-Attestation-d'identité-numérique)
+5. [Attestation d'identité numérique](##50-Le-contenu-de-l'Attestation)
 
 6. [Résultats attendus](#60-résultats-attendus)
 
@@ -140,7 +140,7 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
   <b>Diagramme de séquence - Vérification d'attestation</b>
 </p>
 
-## 5.0 Le contenu de l'/Attestation
+## 5.0 Le contenu de l'Attestation
 
 Voici le schéma de données utilisé pour l\'attestation d\'identité numérique ainsi que pour sa délégation:
 
