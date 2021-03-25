@@ -12,4 +12,4 @@ COPY env2js.sh /opt/app-root/src/
 COPY docker-start.sh /opt/app-root/src/
 COPY server.js /opt/app-root/src/
 EXPOSE 10000
-CMD ["sh", "./docker-start.sh"]
+CMD ["/bin/bash", "./docker-start.sh"]
