@@ -127,14 +127,14 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 # 4.0 Démarche
 
 <p align="center">
-  <img src="Images/Démarche1.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
+  <img src="Images/Demarche1.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
 
   <br>
   <b>Diagramme de séquence - Émission d'attestation</b>
 </p>
 
 <p align="center">
-  <img src="Images/Démarche2.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
+  <img src="Images/Demarche2.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
 
   <br>
   <b>Diagramme de séquence - Vérification d'attestation</b>
