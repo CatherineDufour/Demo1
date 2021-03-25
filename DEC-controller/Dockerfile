@@ -1,5 +1,4 @@
 FROM registry.redhat.io/ubi8/nodejs-12 as builder
-RUN useradd --uid 1000 --gid root 
 WORKDIR /opt/app-root/src
 ENV PATH /opt/app-root/src/node_modules/.bin:$PATH
 COPY package.json /opt/app-root/src
