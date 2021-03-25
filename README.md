@@ -14,7 +14,7 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
 4. [Démarche](#40-démarche)
 
-5. [Attestation d'identité numérique](##50-le-contenu-de-lattestation)
+5. [Attestation d'identité numérique](#50-le-contenu-de-lattestation)
 
 6. [Résultats attendus](#60-résultats-attendus)
 
@@ -336,7 +336,7 @@ relation _détenteur -- sujet_ qui permet ultimement à un individu de
 Dans le cas d\'une personne autonome, la relation est simple le détenteur
 est le sujet de l\'attestation.
 
-#### 7.3.1 Le détenteur
+#### 7.3.1 Le détenteur parental
 
 Nous avons émis l\'hypothèse que si le détenteur est le sujet, il n\'est
 pas nécessaire de spécifier le champ *holder* : la relation est
@@ -349,7 +349,7 @@ cependant.
 Dans le cas de l\'autorité parentale, la relation est encore simple : le
 détenteur est le parent et sujet de l\'attestation est l\'enfant.
 
-#### 7.4.1 Le détenteur
+#### 7.4.1 Le détenteur parental
 
 Ce cas de figure est représenté dans l\'expérimentation par l\'émission
 d\'une l\'attestation d\'identité à la mère d\'Alice. Le schéma du
