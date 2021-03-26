@@ -87,7 +87,7 @@ CPQ-agent/Dockerfile
 
 Se créer un DID public sur la blockchain ou réutiliser celui fournie dans la démo sur votre chaîne de bloc. Si vous avez utilisez l'installation de la Province de la Colombie Britannique au Canada. Assurez-vous d'avoir ajouté l'explorateur de bloc. Vous aurez un interface graphique pour créer et/ou ajouter votre DID public sur votre chaîne de bloc. Si vous utilisez un autre réseau de blockchain que le votre, vous devrez utiliser les outils fournis pour créer et/ou ajotuer votre DID public.
 
-![Explorateur de bloc](Images/NewDID.png)
+![Explorateur de bloc](images/NewDID.png)
 
 ### [Optionel] Renseigner l'agent avec la clé privé associé au DID public
 

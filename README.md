@@ -12,6 +12,8 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
    1. [Conditions initiales et prémisses](#31-conditions-initiales-et-prémisses)
 
+   2. [Médias standard disponibles](#32-médias-standard-disponibles)
+
 4. [Démarche](#40-démarche)
 
 5. [Attestation d'identité numérique](#50-le-contenu-de-lattestation)
@@ -57,7 +59,7 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 > places en service de garde._
 
 <p align="center">
-  <img src="Images/Contexte1.png" label="Contexte d'Alice" />
+  <img src="images/Contexte1.png" label="Contexte d'Alice" />
 
   <br>
   <b>Contexte de l'histoire d'Alice</b>
@@ -118,7 +120,7 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 - Le DEC connait la relation entre la mère et l\'enfant: elle est dans ses registres internes.
 
 <p align="center">
-  <img src="Images/EnvironnementTest.png" label="Environnement de test" />
+  <img src="images/EnvironnementTest.png" label="Environnement de test" />
 
   <br>
   <b>Shéma des composants utilisés pour réaliser l'expérimentation</b>
@@ -126,19 +128,19 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 
 ## 3.2 Médias standard disponibles 
 
-Quelques médias d'image standards ont été crées et déposées dans le répertoire [d'Avatars](./Images/Avatar). Ces images peuvent être utilisées dans les formulaires d'entrée de données de la PES d'émission d'attestation. 
+Quelques médias d'image standards ont été crées et déposées dans le répertoire [d'Avatars](./images/Avatar). Ces images peuvent être utilisées dans les formulaires d'entrée de données de la PES d'émission d'attestation. 
 
 # 4.0 Démarche
 
 <p align="center">
-  <img src="Images/Demarche1.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
+  <img src="images/Demarche1.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
 
   <br>
   <b>Diagramme de séquence - Émission d'attestation</b>
 </p>
 
 <p align="center">
-  <img src="Images/Demarche2.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
+  <img src="images/Demarche2.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
 
   <br>
   <b>Diagramme de séquence - Vérification d'attestation</b>
@@ -452,7 +454,7 @@ et les performances des infrastructures. Le diagramme de séquence de
 l\'expérimentation devrait donc être le suivant :
 
 <p align="center">
-  <img src="Images/AttestationTransaction1.png" label="Émission d'une attestation d'on le sujet n'est pas le détenteur" />
+  <img src="images/AttestationTransaction1.png" label="Émission d'une attestation d'on le sujet n'est pas le détenteur" />
   
   <br>
   <b>Diagramme de séquence de l'expérimentation</b>
