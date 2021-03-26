@@ -12,7 +12,7 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
    1. [Conditions initiales et prémisses](#31-conditions-initiales-et-prémisses)
 
-   2. [Médias standard disponibles](#32-médias-standard-disponibles)
+   2. [Médias standards disponibles](#32-médias-standards-disponibles)
 
 4. [Démarche](#40-démarche)
 
@@ -126,7 +126,7 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
   <b>Shéma des composants utilisés pour réaliser l'expérimentation</b>
 </p>
 
-## 3.2 Médias standard disponibles 
+## 3.2 Médias standards disponibles 
 
 Quelques médias d'image standards ont été crées et déposées dans le répertoire [d'Avatars](./images/Avatar). Ces images peuvent être utilisées dans les formulaires d'entrée de données de la PES d'émission d'attestation. 
 
@@ -173,8 +173,8 @@ Voici le schéma de données utilisé pour l\'attestation d\'identité numériqu
 }
 ```
 
-Par exemple, l\'identité de la mère pourrait être composé des valeurs suivantes:
-|Attributs | Valeurs |
+Par exemple, l\'identité de la mère émise pour elle-même en tant que détentrice pourrait être composée des valeurs suivantes:
+|Nom de l'Attribut | Valeur |
 |----------|---------|
 |holder.id | Espace blanc |
 |holder.type | Espace blanc |
@@ -195,9 +195,9 @@ Par exemple, l\'identité de la mère pourrait être composé des valeurs suivan
 
 <b>Tableau 1 - Données de l\'attestation d\'identité de la mère</b>
 
-> Vous remarquerez que nous utilisons un espace blanc lorsque la valeur est null. Les valeurs null ne sont pas pris en charge dans un format json.
+> Vous remarquerez qu'un espace blanc est utilisé lorsque la valeur est "null". Les valeurs "null" ne sont pas pris en charge dans un format json.
 
-Autre exemple, l\'identité de l\'enfant pourrait être composé des valeurs suivantes:
+Autre exemple, l\'identité de l\'enfant émise à la mère en tant que détentrice pourrait être composée des valeurs suivantes:
 |Attributs | Valeurs |
 |----------|---------|
 |holder.id | Clé publique du DID privé du parent |
@@ -232,8 +232,8 @@ Le schéma d\'attestation d'identité numérique se retrouve sur la chaîne de b
 - de fixer la date d\'échéance de l\'attestation à la date de majorité
   du sujet.
 
-L\'attestation d\'identité de la mère d\'Alice se retrouve dans le
-portefeuille de la mère. Elle doit permettre:
+L\'attestation d\'identité de la mère, Sarah Courcy, se retrouve dans
+son propre portefeuille. Elle doit permettre:
 
 - d\'identifier la mère comme étant le sujet de l\'attestation;
 
@@ -258,9 +258,9 @@ doit permettre:
 La vérification permet de valider :
 
 - L\'émission d\'une requête de présentation exigeant la présentation
-  des attributs de l\'attestation d\'identité d'Alice;
+  des valeurs des attributs de l\'attestation d\'identité d'Alice;
 
-- La présentation de champs suivants par la mère :
+- La présentation des valeurs des attributs "suivants" par la mère :
 
   - La date d\'échéance de l\'attestation;
 
