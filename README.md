@@ -4,34 +4,36 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
 ## Table des matières
 
-1. [Objectifs](#10-Objectifs)
+1. [Objectifs](#10-objectifs)
 
-2. [Contexte](#20-Contexte)
+2. [Contexte](#20-contexte)
 
-3. [Environnement d\'expérimentation](#30-Environnement-d'expérimentation)
+3. [Environnement d\'expérimentation](#30-environnement-dexpérimentation)
 
    1. [Conditions initiales et prémisses](#31-conditions-initiales-et-prémisses)
 
+   2. [Médias standard disponibles](#32-médias-standard-disponibles)
+
 4. [Démarche](#40-démarche)
 
-5. [Attestation d\'identité numérique](#50-Attestation-d'identité-numérique)
+5. [Attestation d'identité numérique](#50-le-contenu-de-lattestation)
 
 6. [Résultats attendus](#60-résultats-attendus)
 
 7. [Analyse](#70-analyse)
 
-   1. [Échanges avec le BC](#71-Échanges-avec-le-BC)
-   2. [Expérimentations](#72-Expérimentations)
-   3. [Personne autonome](#73-Personne-autonome)
-      1. [Le détenteur](#731-Le-détenteur)
-   4. [Autorité parentale](#74-Autorité-parentale)
-      1. [Le détenteur parental](#741-Le-détenteur-parental)
-      2. [Le sujet](#742-Le-sujet)
-      3. [L\'échéance](#743-L'échéance)
-      4. [Le statut de révocation](#744-Le-statut-de-révocation)
-   5. [Attestations et transactions](#75-Attestations-et-transactions)
+   1. [Échanges avec le BC](#71-échanges-avec-le-BC)
+   2. [Expérimentations](#72-expérimentations)
+   3. [Personne autonome](#73-personne-autonome)
+      1. [Le détenteur](#731-le-détenteur)
+   4. [Autorité parentale](#74-autorité-parentale)
+      1. [Le détenteur parental](#741-le-detenteur-parental)
+      2. [Le sujet](#742-le-sujet)
+      3. [L\'échéance](#743-léchéance)
+      4. [Le statut de révocation](#744-le-statut-de-révocation)
+   5. [Attestations et transactions](#75-attestations-et-transactions)
 
-8. [Conclusion](#80-Conclusion)
+8. [Conclusion](#80-conclusion)
 
 ---
 
@@ -57,7 +59,7 @@ régler les contraintes et particularités d\'un cas d\'affaires concret.
 > places en service de garde._
 
 <p align="center">
-  <img src="Images/Contexte1.png" label="Contexte d'Alice" />
+  <img src="images/Contexte1.png" label="Contexte d'Alice" />
 
   <br>
   <b>Contexte de l'histoire d'Alice</b>
@@ -118,29 +120,33 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 - Le DEC connait la relation entre la mère et l\'enfant: elle est dans ses registres internes.
 
 <p align="center">
-  <img src="Images/EnvironnementTest.png" label="Environnement de test" />
+  <img src="images/EnvironnementTest.png" label="Environnement de test" />
 
   <br>
   <b>Shéma des composants utilisés pour réaliser l'expérimentation</b>
 </p>
 
+## 3.2 Médias standard disponibles 
+
+Quelques médias d'image standards ont été crées et déposées dans le répertoire [d'Avatars](./images/Avatar). Ces images peuvent être utilisées dans les formulaires d'entrée de données de la PES d'émission d'attestation. 
+
 # 4.0 Démarche
 
 <p align="center">
-  <img src="Images/Démarche1.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
+  <img src="images/Demarche1.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
 
   <br>
   <b>Diagramme de séquence - Émission d'attestation</b>
 </p>
 
 <p align="center">
-  <img src="Images/Démarche2.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
+  <img src="images/Demarche2.png" label="Émission d'une attestation dont le sujet n'est pas le détenteur" />
 
   <br>
   <b>Diagramme de séquence - Vérification d'attestation</b>
 </p>
 
-## 5.0 Le contenu de l'/Attestation
+## 5.0 Le contenu de l'Attestation
 
 Voici le schéma de données utilisé pour l\'attestation d\'identité numérique ainsi que pour sa délégation:
 
@@ -336,7 +342,7 @@ relation _détenteur -- sujet_ qui permet ultimement à un individu de
 Dans le cas d\'une personne autonome, la relation est simple le détenteur
 est le sujet de l\'attestation.
 
-#### 7.3.1 Le détenteur
+#### 7.3.1 Le détenteur parental
 
 Nous avons émis l\'hypothèse que si le détenteur est le sujet, il n\'est
 pas nécessaire de spécifier le champ *holder* : la relation est
@@ -349,7 +355,7 @@ cependant.
 Dans le cas de l\'autorité parentale, la relation est encore simple : le
 détenteur est le parent et sujet de l\'attestation est l\'enfant.
 
-#### 7.4.1 Le détenteur
+#### 7.4.1 Le detenteur parental
 
 Ce cas de figure est représenté dans l\'expérimentation par l\'émission
 d\'une l\'attestation d\'identité à la mère d\'Alice. Le schéma du
@@ -448,7 +454,7 @@ et les performances des infrastructures. Le diagramme de séquence de
 l\'expérimentation devrait donc être le suivant :
 
 <p align="center">
-  <img src="Images/AttestationTransaction1.png" label="Émission d'une attestation d'on le sujet n'est pas le détenteur" />
+  <img src="images/AttestationTransaction1.png" label="Émission d'une attestation d'on le sujet n'est pas le détenteur" />
   
   <br>
   <b>Diagramme de séquence de l'expérimentation</b>
