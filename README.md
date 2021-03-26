@@ -1,6 +1,6 @@
-# Attester une délégation dans le cadre de l\'identité numérique
+# Émettre une attestation d\'identité dont le sujet n'est pas le détenteur, par un organisme qui connaît la relation 
 
-Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le concept de l\'identité numérique. Le sujet: l\'émission d\'une attestation d\'identité à un représentant par un organisme émetteur qui connait la relation.
+Voici les travaux réalisés dans le cadre d'une expérimentation basée sur le concept de l\'identité numérique. Le sujet: l\'émission d\'une attestation d\'identité à un représentant (détenteur) d'un individu représenté (sujet) par un organisme émetteur qui connait la relation entre eux.
 
 ## Table des matières
 
@@ -22,7 +22,7 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
 7. [Analyse](#70-analyse)
 
-   1. [Échanges avec le BC](#71-échanges-avec-le-BC)
+   1. [Échanges avec la Colombie-Britannique BC](#71-échanges-avec-la-Colombie-Britannique)
    2. [Expérimentations](#72-expérimentations)
    3. [Personne autonome](#73-personne-autonome)
       1. [Le détenteur](#731-le-détenteur)
@@ -41,20 +41,21 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
 - Explorer les concepts techniques permettant de soutenir la relation détenteur-sujet d\'une attestation.
 
-- Évaluer des modèles permettant de soutenir la relation parent-enfant pour l\'attestation d\'identité gouvernementale lorsque l\'émetteur connait la relation.
+- Évaluer des modèles permettant de soutenir la relation parent-enfant (soit représentant/individu représenté ou détenteur/sujet) pour l\'attestation d\'identité gouvernementale lorsque l\'émetteur connait la relation.
 
 # 2.0 Contexte
 
-Le contrôle indirect de l\'identité est complexe. Un cas d\'utilisation
+Le contrôle indirect de l\'identité, soit l'émission d'une attestation au 
+représentantde cet individu, est complexe. Un cas d\'utilisation
 minimal a été élaboré afin de permettre la mise en place de toutes les
 composantes nécessaires pour expérimenter le concept sans toutefois
 régler les contraintes et particularités d\'un cas d\'affaires concret.
 
-> _La petite Alice vient de naître. Le DEC consigne l\'événement dans ses
+> _La petite Alice vient de naître. Le Directeur de l'État civil (DEC) consigne l\'événement dans ses
 > systèmes de données et notifie les parents qu\'ils peuvent faire la
-> demande de l\'attestation numérique d\'identité. La mère d\'Alice fait
-> donc la demande en ce sens. Les mois passent et les parents veulent
-> inscrire bébé Alice dans une centre de la petite enfance. Pour ce
+> demande de l\'attestation numérique d\'identité d'Alice. Sa mère, Sarah Courcy, en fait
+> donc la demande. Les mois passent et les parents veulent
+> inscrire Alice dans une centre de la petite enfance (CPE). Pour ce
 > faire, la mère d\'Alice fait une demande au Guichet unique d\'accès aux
 > places en service de garde._
 
@@ -105,6 +106,9 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 
 - Un (1) portefeuille numérique appartenant à la mère est disponible;
 
+- La mère dispose déjà de son attesation d'identité dans son portefeuille (pour
+laquelle une vérification d'identité préalable a été effectuée par l'émetteur);
+
 - Un répertoire distribué identitaire se conformant au _framework_
   _ARIES_ est en place et permet d\'émettre des attestations ainsi que les schémas associés;
 
@@ -113,7 +117,7 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 - Un consommateur d\'attestations représentant le guichet unique est en place;
 
 - La mère n\'a pas besoin de faire une vérification d\'identité pour
-  obtenir une attestation certifiant son identité;
+  obtenir l'attestation d'identité d'Alice;
 
 - Les notifications et publications entre les intervenants ne sont pas de la portée de l\'expérimentation. On assume qu\'elles sont exécutées de manière appropriée lorsque mentionnées;
 
