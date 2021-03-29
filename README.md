@@ -1,6 +1,6 @@
-# Attester une délégation dans le cadre de l\'identité numérique
+# Émettre une attestation d'identité dont le détenteur n'est pas le sujet, par un organisme qui connaît la relation 
 
-Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le concept de l\'identité numérique. Le sujet: l\'émission d\'une attestation d\'identité à un représentant par un organisme émetteur qui connait la relation.
+Voici les travaux réalisés dans le cadre d'une expérimentation basée sur le concept de l\'identité numérique. Le sujet: l\'émission d\'une attestation d\'identité à un représentant (détenteur) d'un individu représenté (sujet) par un organisme émetteur qui connait la relation entre ces individus.
 
 ## Table des matières
 
@@ -22,7 +22,7 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
 7. [Analyse](#70-analyse)
 
-   1. [Échanges avec le BC](#71-échanges-avec-le-BC)
+   1. [Échanges avec la Colombie-Britannique](#71-échanges-avec-la-Colombie-Britannique)
    2. [Expérimentations](#72-expérimentations)
    3. [Personne autonome](#73-personne-autonome)
       1. [Le détenteur](#731-le-détenteur)
@@ -41,20 +41,21 @@ Voici les travaux réalisé dans le cadre d'une expérimentation basé sur le co
 
 - Explorer les concepts techniques permettant de soutenir la relation détenteur-sujet d\'une attestation.
 
-- Évaluer des modèles permettant de soutenir la relation parent-enfant pour l\'attestation d\'identité gouvernementale lorsque l\'émetteur connait la relation.
+- Évaluer des modèles permettant de soutenir la relation parent-enfant(représentant/individu représenté ou détenteur/sujet) pour l\'attestation d\'identité gouvernementale lorsque l\'émetteur connait la relation.
 
 # 2.0 Contexte
 
-Le contrôle indirect de l\'identité est complexe. Un cas d\'utilisation
+Le contrôle indirect de l\'identité, soit l'émission d'une attestion d'un
+sujet à son représentant, est complexe. Un cas d\'utilisation
 minimal a été élaboré afin de permettre la mise en place de toutes les
 composantes nécessaires pour expérimenter le concept sans toutefois
 régler les contraintes et particularités d\'un cas d\'affaires concret.
 
-> _La petite Alice vient de naître. Le DEC consigne l\'événement dans ses
+> _La petite Alice vient de naître. Le Directeur de l'État civil (DEC) consigne l\'événement dans ses
 > systèmes de données et notifie les parents qu\'ils peuvent faire la
-> demande de l\'attestation numérique d\'identité. La mère d\'Alice fait
-> donc la demande en ce sens. Les mois passent et les parents veulent
-> inscrire bébé Alice dans une centre de la petite enfance. Pour ce
+> demande de l\'attestation numérique d\'identité d'Alice. Sa mère, Sarah Courcy, en fait
+> donc la demande . Les mois passent et les parents veulent
+> inscrire Alice dans une centre de la petite enfance (CPE). Pour ce
 > faire, la mère d\'Alice fait une demande au Guichet unique d\'accès aux
 > places en service de garde._
 
@@ -103,7 +104,8 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 
 ## 3.1 Conditions initiales et prémisses
 
-- Un (1) portefeuille numérique appartenant à la mère est disponible;
+- Un (1) portefeuille numérique appartenant à la mère est disponible, 
+- sur lequel son attestation d'identité est déjà disponible;
 
 - Un répertoire distribué identitaire se conformant au _framework_
   _ARIES_ est en place et permet d\'émettre des attestations ainsi que les schémas associés;
@@ -112,8 +114,7 @@ documentation se retrouvant sur ce lien [procédure d\'installation](README_inst
 
 - Un consommateur d\'attestations représentant le guichet unique est en place;
 
-- La mère n\'a pas besoin de faire une vérification d\'identité pour
-  obtenir une attestation certifiant son identité;
+- Une vérification d'identité n'est pas requise pour émettre l'attestation d'identité;
 
 - Les notifications et publications entre les intervenants ne sont pas de la portée de l\'expérimentation. On assume qu\'elles sont exécutées de manière appropriée lorsque mentionnées;
 
@@ -173,8 +174,8 @@ Voici le schéma de données utilisé pour l\'attestation d\'identité numériqu
 }
 ```
 
-Par exemple, l\'identité de la mère pourrait être composé des valeurs suivantes:
-|Attributs | Valeurs |
+Par exemple, l\'identité de la mère émise pour elle-même en tant que détentrice pourrait être composée des valeurs suivantes:
+|Nom de l'attribut | Valeurs |
 |----------|---------|
 |holder.id | Espace blanc |
 |holder.type | Espace blanc |
@@ -195,10 +196,10 @@ Par exemple, l\'identité de la mère pourrait être composé des valeurs suivan
 
 <b>Tableau 1 - Données de l\'attestation d\'identité de la mère</b>
 
-> Vous remarquerez que nous utilisons un espace blanc lorsque la valeur est null. Les valeurs null ne sont pas pris en charge dans un format json.
+> Vous remarquerez qu'un espace blanc est utilisé lorsque la valeur est "null". Les valeurs "null" ne sont pas pris en charge dans un format json.
 
-Autre exemple, l\'identité de l\'enfant pourrait être composé des valeurs suivantes:
-|Attributs | Valeurs |
+Autre exemple, l\'identité de l\'enfant émise à la mère en tant que détentrice pourrait être composée des valeurs suivantes:
+|Nom de l'attribut | Valeurs |
 |----------|---------|
 |holder.id | Clé publique du DID privé du parent |
 |holder.type | parent |
@@ -221,7 +222,7 @@ Autre exemple, l\'identité de l\'enfant pourrait être composé des valeurs sui
 
 # 6.0 Résultats attendus
 
-Le schéma d\'attestation d'identité numérique se retrouve sur la chaîne de bloc. Elle est la structure d'information qui doit permettre:
+Le schéma d\'attestation d'identité numérique se retrouve sur la chaîne de blocs. Elle est la structure d'information qui doit permettre:
 
 - d\'identifier le sujet de l\'attestation;
 
@@ -232,8 +233,8 @@ Le schéma d\'attestation d'identité numérique se retrouve sur la chaîne de b
 - de fixer la date d\'échéance de l\'attestation à la date de majorité
   du sujet.
 
-L\'attestation d\'identité de la mère d\'Alice se retrouve dans le
-portefeuille de la mère. Elle doit permettre:
+L\'attestation d\'identité de la mère, Sarah Courcy, se retrouve dans
+son propre portefeuille . Elle doit permettre:
 
 - d\'identifier la mère comme étant le sujet de l\'attestation;
 
@@ -258,13 +259,13 @@ doit permettre:
 La vérification permet de valider :
 
 - L\'émission d\'une requête de présentation exigeant la présentation
-  des attributs de l\'attestation d\'identité d'Alice;
+  des valeurs des attributs de l\'attestation d\'identité d'Alice;
 
-- La présentation de champs suivants par la mère :
+- La présentation valeurs suivantes par la mère :
 
   - La date d\'échéance de l\'attestation;
 
-  - La détentrice : mère;
+  - La détentrice : Sarah Courcy;
 
   - Le sujet : Alice;
 
@@ -276,7 +277,7 @@ La vérification permet de valider :
 
 # 7.0 Analyse
 
-## 7.1 Échanges avec le BC
+## 7.1 Échanges avec la Colombie-Britannique
 
 La relation représentant la cellule familiale n\'est pas la plus facile à
 gérer. Elle est, bien entendu, régie par des aspects juridiques. Ces
@@ -295,16 +296,14 @@ culture autochtone pourrait revenir à imposer un modèle incompatible à
 la situation réelle.
 
 C\'est pour ces raisons que la Colombie-Britannique a débuté
-l\'implantation du concept de délégation avec le volet entreprise : il
+l\'implantation du concept de représentation n avec le volet entreprise : il
 était plus simple de représenter les relations telles que _patron --
 entreprise_, _relation employé -- entreprise_, _relation patron --
 employé_.
 
-Bien que la Colombie-Britannique n\'ai pas encore mis en place un modèle
-permettant de représenter la relation _parent-enfant,_ leurs travaux sur
-le sujet les amènent à penser qu\'il faut faire confiance à l\'écosystème
-et que le fardeau d\'identifier le bon sujet et le bon détenteur d\'une
-attestation revient à l\'émetteur. Dans notre expérimentation, c\'est le
+Ses travaux sur le sujet amènent à penser qu\'il faut faire confiance 
+à l\'écosystème et que le fardeau d\'identifier le bon sujet et le bon détenteur d\'une
+attestation revient à l\'émetteur. Dans l'expérimentation, c\'est le
 DEC qui devrait s\'assurer que:
 
 - la mère est bien la « bonne » mère;
@@ -317,19 +316,7 @@ DEC qui devrait s\'assurer que:
 En résumé, sans avoir la solution idéale, la Colombie-Britannique
 considère qu\'il faut garder le modèle à sa plus simple expression afin
 de représenter les relations familiales. On doit y représenter le
-détenteur et le sujet le plus simplement possible. Pour l\'attestation
-d\'identité d\'Alice, il y aurait potentiellement trois (3) émissions
-d\'attestation :
-
-- Une attestation identifiant le père comme le détenteur qui tombe à
-  échéance à la majorité d\'Alice;
-
-- Une attestation identifiant la mère comme la détentrice qui tombe à
-  échéance à la majorité d\'Alice;
-
-- Une attestation pour Alice qui sera émise le jour où Alice sera en
-  mesure de posséder un portefeuille numérique ET que les lois qui
-  s\'appliquent lui permettent d\'en faire la demande.
+détenteur et le sujet le plus simplement possible. 
 
 ## 7.2 Expérimentations
 
@@ -344,11 +331,11 @@ est le sujet de l\'attestation.
 
 #### 7.3.1 Le détenteur parental
 
-Nous avons émis l\'hypothèse que si le détenteur est le sujet, il n\'est
+L\'hypothèse émise est que si le détenteur est le sujet, il n\'est
 pas nécessaire de spécifier le champ *holder* : la relation est
 implicitement définie. Après expérimentation, il semble que le champ
-_holder_ ne peut être omis : ses valeurs peuvent être fixées à _nul_
-cependant.
+_holder_ ne peut être omis : ses valeurs peuvent être fixées à "null", 
+en utilisant un espace blanc.
 
 ### 7.4 Autorité parentale
 
@@ -358,14 +345,14 @@ détenteur est le parent et sujet de l\'attestation est l\'enfant.
 #### 7.4.1 Le detenteur parental
 
 Ce cas de figure est représenté dans l\'expérimentation par l\'émission
-d\'une l\'attestation d\'identité à la mère d\'Alice. Le schéma du
+d\'une attestation d\'identité à la mère d\'Alice. Le schéma du
 _Verifiable Credential_ défini par le W3C comporte un champ _holder_.
 
 ```json
 "holder": {"@id": "cred:holder", "@type": "@id"}
 ```
 
-Le champ _id_ est destiné à identifier le détenteur à l\'aide d\'un DID.
+Le champ _id_ est destiné à identifier le détenteur à l\'aide d\'un DID (decentralized identifier).
 L\'expérimentation soulève plusieurs questionnements concernant
 l\'identifiant à utiliser. Doit-on utiliser le DID assigné lors de la
 création du portefeuille? Si l\'individu a plusieurs portefeuilles,
@@ -379,9 +366,9 @@ citoyen : cette connexion est unique mais elle est reliée à la connexion
 entre deux entités du réseau et non à l\'identification d\'un individu en
 particulier. Cette relation n\'est connue que par les 2 protagonistes et
 ne peut donc pas être utile aux divers consommateurs de l\'écosystème
-pour identifier le porteur ou le sujet.
+pour identifier le détenteur ou le sujet.
 
-C\'est le champ _type_ qui nous permet de qualifier le lien entre le
+C\'est le champ _type_ qui permet de qualifier le lien entre le
 détenteur et le sujet. Les valeurs possibles de ce champ doivent être
 déterminées et publiées par l\'émetteur afin que l\'écosystème puisse les
 exploiter. Selon notre compréhension des normes du W3C, il est possible
@@ -416,7 +403,7 @@ un parent de générer ce DID initial.
 La date d\'échéance est une valeur arbitraire fixée lors de l\'émission.
 Elle relève des règles d\'affaires de l\'émetteur. Par exemple, dans le
 cas présent, la date d\'échéance pourrait être la date à laquelle Alice
-atteint la majorité. La mère d\'Alice ne pourrait donc plus utiliser
+atteint la majorité. La mère d\'Alice ne pourrait dès lors plus utiliser
 l\'attestation d\'identité d\'Alice quelle détient dans son portefeuille.
 Par contre, cela n\'empêche pas Alice d\'utiliser sa propre attestation
 d\'identité, contenue dans son propre portefeuille, qui elle n\'a pas de
@@ -429,26 +416,25 @@ s\'assurer que la vérification de la date d\'échéance par un consommateur
 se fait en bonne et due forme? Plusieurs choses sont à valider sur la
 valeur ainsi que sur le format des dates. Il y a des standards dans le
 modèle de donnés d\'une attestation et certains outils reconnus sont déjà
-disponibles. Il semble, à prime abords, qu\'il serait judicieux de
-fournir aux développeurs certains _validateurs_ standardisés pour
-faciliter leur tâche. Cet aspect ne relève pas de la présente
-expérimentation.
+disponibles. Il serait judicieux de fournir aux consommateurs certains 
+_validateurs_ standardisés pour faciliter leur tâche. Cet aspect ne relève 
+pas de la présente expérimentation.
 
 #### 7.4.4 Le statut de révocation
 
-Le statut de l\'attestation i.e. si elle est révoquée ou non doit faire
+Le statut de l\'attestation, par exemple si elle est révoquée ou non, doit faire
 partie du processus de vérification du consommateur. C\'est l\'émetteur de
 l\'attestation qui décide si l\'attestation est révoquée ou non selon ses
 propres règles d\'affaires.
 
 ### 7.5 Attestations et transactions
 
-Même si ce n\'était pas le sujet, il est important de mentionner que
-l\'expérimentation nous a permis de réaliser un aspect fondamental de la
-blockchain de type Hyperledger-Indy. En effet, contrairement à notre
-hypothèse initiale, il n\'y a aucun enregistrement dans la blockchain
+Même si ce n\'était pas l'objet de l'expérimentation, il est important de mentionner qu\'elle
+nous a permis de prendre conscience d\'un un aspect fondamental de la
+chaîne de blocs de type Hyperledger-Indy. En effet, contrairement à l\'hypothèse
+initiale, il n\'y a aucun enregistrement dans la chaine de blocs
 d\'une transaction lors de l\'émission de l\'attestation. Les seuls
-enregistrements dans la blockchain se font lors de l\'ajout d\'un schéma
+enregistrements dans la chaîne de blocs se font lors de l\'ajout d\'un schéma
 et d\'une définition d\'attestation. L\'impact est positif sur la capacité
 et les performances des infrastructures. Le diagramme de séquence de
 l\'expérimentation devrait donc être le suivant :
@@ -462,16 +448,16 @@ l\'expérimentation devrait donc être le suivant :
 
 # 8.0 Conclusion
 
-L\'expérimentation nous a permis d\'explorer les concepts soutenant la
+L\'expérimentation a permis d\'explorer les concepts soutenant la
 relation _sujet-détenteur_ dans une attestation. La prémisse étant que
 la relation est connue de l\'émetteur, ce dernier peut donc émettre une
 attestation d\'identité contenant l\'information suffisante et nécessaire
 à la description de ce lien.
 
 Il faut que l\'attestation soit émise en accord avec les conditions
-régissant la relation _représentant_ - *représenté* : il faut un moyen
-de redonner le plein contrôle de l\'identité au représenté dès que cela
-est possible. Dans notre cas, c\'est la majorité de l\'enfant qui servait
+régissant la relation représentant/individu représenté : il faut un moyen
+de redonner le plein contrôle de l\'identité à l'individu représenté dès que cela
+est possible. Dans le cas retenu pour l'expérimentation, c\'est la majorité de l\'enfant qui servait
 de critère. Il revient au consommateur d\'appliquer ses diverses règles
 d\'affaires aux données présentées par le détenteur.
 
@@ -479,65 +465,59 @@ Il y a une opportunité de faciliter la vie des consommateurs
 d\'attestations et d\'assurer une standardisation des processus de
 validation en offrant des _validateurs_ à l\'écosystème. Cela n\'était pas
 dans la portée de cette expérimentation. Une veille doit être faite à ce
-sujet pour voir qu\'est-ce qui existe dans le domaine et une analyse doit
-être faite sur la faisabilité de la chose.
+sujet pour déterminer ce qui existe dans le domaine et une analyse doit
+être réalisée sur la faisabilité de cette proposition.
 
-Même si notre expérimentation traitait de la délégation uniquement, nous
-nous sommes heurtés à plusieurs difficultés relatives au modèle de
+Même si l\'expérimentation traitait de la représentation uniquement, 
+plusieurs difficultés sont survenues relatives au modèle de
 donnés de l\'attestation. Bien qu\'il soit avancé et reconnu par la
 communauté, le modèle de l\'attestation vérifiable proposé par le W3C n\'a
 pas encore atteint le statut de norme. Il existe plusieurs exemples et
 implémentations mais elles ne convergent pas toutes vers une façon
-unique de faire les choses. Nous avons donc fait certaines suppositions
-dans nos implémentations afin de démontrer les concepts de la
-délégation. Cependant, il est clair qu\'il faut améliorer notre maitrise
-du sujet si on veut appuyer l\'étape de réalisation de la démarche de
-conception de service. Il y a une interdépendance très forte entre les
+unique de procéder. Certaines suppositions ont donc été faites
+dans cette expérimentation afin de démontrer les concepts de la
+représentation. Il y a une interdépendance très forte entre les
 volets affaires et techniques au niveau de l\'attestation : seule une
-compréhension claire des possibilités et limites que nous offre le
-modèle de données peut nous aider à combler correctement les besoins
+compréhension claire des possibilités et limites qu'offre le
+modèle de données peut aider à combler correctement les besoins
 d\'affaires.
 
 Notamment, si un consommateur veut interpréter les données d\'une
 attestation, il doit pouvoir connaitre le champ des valeurs possibles.
-Il faut donc que l\'émetteur publie ce dernier à l\'écosystème et
+Il faut donc que l\'émetteur publie ce dernier à l\'écosystème de même que 
 l\'interprétation qui doit en être faite. La valeur d\'un champ _couleur_
 peut contenir _bleu_ et _rouge_ pour un émetteur _et le consommateur
 doit être en mesure d\'interpréter ces valeurs_. Il semble donc qu\'une
 gouvernance doit être mise en place afin d\'éviter les conflits entre les
 différents besoins d\'affaires et devrait dans ce cas-ci exiger
-l\'utilisation de la spécification sur le schéma JSON pour les
-informations d\'identification vérifiables
-(https://w3c-ccg.github.io/vc-json-schemas/).
+l\'utilisation de la norme régissant les informations d'identification vérifiables 
+dans le schéma JSON (https://w3c-ccg.github.io/vc-json-schemas/).
 
-Dans le même ordre d\'idée, nous avons observés avec l\'utilisation de
-portefeuille commerciaux, si quatre (4) attestations d\'identité
-numérique dans le portefeuille d\'un parent contiennent le champ
+Dans le même ordre d\'idée, cette observation a été faite avec l\'utilisation de
+portefeuilles commerciaux : si quatre (4) attestations numériques d\'identité
+ dans le portefeuille d\'un parent contiennent le champ
 _NomComplet_, il devient problématique pour ce dernier de présenter les
 champs provenant des bonnes attestations. Ce problème ne semble pouvoir
 se résoudre que par l\'expérience utilisateur offerte par le
 portefeuille. Sans avoir consacré beaucoup de temps à résoudre le
 problème, aucun portefeuille satisfaisant n\'a été trouvé lors de
-l\'expérimentation. Il faudrait donc envisager de développer notre propre
-portefeuille ou émettre des spécifications au marché afin d\'adresser le
-besoin.
+l\'expérimentation. 
 
-Un autre problème auquel nous nous sommes heurtés est l\'identité du
+Un autre problème qui est survenu lors de l\'expérimentation concerne l\'identité du
 sujet ou du détenteur. Quels sont les DID devant être utilisés? Comment
 faire pour identifier correctement le bon individu sans permettre la
 corrélation? Si l\'individu a plusieurs portefeuilles, quel DID
-devons-nous prendre[^1]? Nous avons assumé des DID uniques pour
+doit-être sélectionné[^1]? L\'existance des DID uniques a été assumée pour
 l\'expérimentation mais il y a une nécessité de répondre définitivement à
-ces questions pour la réalisation du DA.
+ces questions.
 
-Finalement, notre collaboration avec la Colombie-Britannique nous a
+Finalement, la collaboration avec la Colombie-Britannique nous a
 permis de réaliser que la représentation d\'une relation parent-enfant
-peut être extrêmement compliquée si on tente la représenter dans les
+peut être extrêmement compliquée si on tente de la représenter dans les
 moindres détails. Plus on tente de la rendre parfaite, plus on risque
 d\'imposer des aspects culturels, des aspects d\'affaires ou des aspects
 technologiques qui ne feront qu\'écourter la validité de l\'attestation et
 compliquer la vie du citoyen.
 
 [^1]:
-    Il faut, entre autres, creuser la notion de _device hub_ pour
-    répondre à cette question.
+    
